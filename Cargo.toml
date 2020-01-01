@@ -1,0 +1,5 @@
+[workspace]
+members = [
+    "libhc",
+    "headset-control"
+]
