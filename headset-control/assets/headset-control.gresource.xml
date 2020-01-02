@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/net/olback/headset-control">
+        <file alias="ui" preprocess="xml-stripblanks">out/headset-control.glade</file>
+        <!-- <file alias="battery-25">img/battery-25.png</file> -->
+    </gresource>
+</gresources>
