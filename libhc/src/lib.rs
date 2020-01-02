@@ -1,28 +1,11 @@
 mod device;
-mod capability;
+mod macros;
 
-#[cfg(test)]
-mod tests {
-    use super::{
-        device::Device,
-        capability::Capability
-    };
-    #[test]
-    fn test_code() {
+mod error;
+pub use error::{HCError, HCResult};
 
-        let d = Device {
-            name: String::from("Corsair Void (Pro)"),
-            capabilities: vec![
-                Capability::BATTERY,
-                Capability::LIGHTNING,
-                Capability::SIDETONE,
-                Capability::NOTIFICATION_SOUND
-            ]
-        };
+mod devices;
+pub use devices::get_available_devices;
 
-        d.dbg_log();
-
-        assert!(true);
-
-    }
-}
+// Re-export
+pub use hidapi;
