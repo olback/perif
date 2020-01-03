@@ -2,14 +2,20 @@ use crate::HCResult;
 
 #[derive(Debug, Clone)]
 pub enum DeviceKind {
-    USB,
-    Bluetooth
+    Bluetooth,
+    Controller,
+    Headphones,
+    Headset,
+    Mouse,
+    Keyboard,
+    Tablet
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum BatteryState {
     Discharging(u8),
     Charging,
+    Full,
     Unavailable
 }
 
@@ -20,8 +26,8 @@ type PlayNotificationFn = fn(hidapi: &hidapi::HidApi, device: &Device, sound: u8
 
 #[derive(Clone)]
 pub struct Device {
-    pub kind: DeviceKind,
     pub name: String,
+    pub kind: DeviceKind,
     pub vid: Option<u16>,
     pub pid: Option<u16>,
     pub mac: Option<String>,
@@ -35,6 +41,7 @@ impl Device {
 
     pub fn usb<N: Into<String>>(
         name: N,
+        kind: DeviceKind,
         vid: u16,
         pid: u16,
         get_battery: Option<GetBatteryFn>,
@@ -43,8 +50,8 @@ impl Device {
         play_notification: Option<PlayNotificationFn>
     ) -> Device {
         Device {
-            kind: DeviceKind::USB,
             name: name.into(),
+            kind: kind,
             vid: Some(vid.into()),
             pid: Some(pid.into()),
             mac: None,
@@ -58,8 +65,8 @@ impl Device {
     pub fn bluetooth<N: Into<String>, M: Into<String>>(name: N, mac: M) -> Device {
 
         Device {
-            kind: DeviceKind::Bluetooth,
             name: name.into(),
+            kind: DeviceKind::Bluetooth,
             vid: None,
             pid: None,
             mac: Some(mac.into()),

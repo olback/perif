@@ -1,6 +1,7 @@
 use crate::{
     HCResult,
-    device::Device
+    device::Device,
+    device::DeviceKind
 };
 
 mod corsair;
@@ -10,6 +11,7 @@ fn supported_devices() -> Vec<Device> {
     vec![
         Device::usb(
             "Corsair Void Pro Wireless",
+            DeviceKind::Headset,
             0x1b1cu16,
             0x0a14u16,
             Some(corsair::void::get_battery),

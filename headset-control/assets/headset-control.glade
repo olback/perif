@@ -23,7 +23,7 @@
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkModelButton" id="open_settings">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
@@ -36,7 +36,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkModelButton">
+          <object class="GtkModelButton" id="open_about">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
@@ -87,20 +87,10 @@
             </child>
           </object>
         </child>
-        <child>
-          <object class="GtkStackSwitcher">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="stack">stack1</property>
-          </object>
-          <packing>
-            <property name="position">1</property>
-          </packing>
-        </child>
       </object>
     </child>
     <child>
-      <object class="GtkStack" id="stack1">
+      <object class="GtkStack" id="views">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="transition_type">slide-left-right</property>
@@ -136,7 +126,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkListBox">
+                  <object class="GtkListBox" id="device_list">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
@@ -155,7 +145,7 @@
                               <object class="GtkImage">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="icon_name">audio-headphones-symbolic</property>
+                                <property name="icon_name">audio-headset-symbolic</property>
                                 <property name="icon_size">3</property>
                               </object>
                               <packing>
@@ -242,7 +232,7 @@
                 <property name="orientation">vertical</property>
                 <property name="spacing">18</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="device_name">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Corsair Void (Pro)</property>
@@ -259,7 +249,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="battery_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
@@ -281,7 +271,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="battery_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">58%</property>
@@ -303,7 +293,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="lightning_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
@@ -331,7 +321,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">12</property>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="lightning_on">
                             <property name="label" translatable="yes">On</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -344,7 +334,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="lightning_off">
                             <property name="label" translatable="yes">Off</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -371,7 +361,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="sidetone_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
@@ -394,7 +384,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScale">
+                      <object class="GtkScale" id="sidetone_scale">
                         <property name="width_request">200</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -414,7 +404,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton">
+                      <object class="GtkButton" id="sidetone_apply">
                         <property name="label" translatable="yes">Apply Sidetone</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -435,7 +425,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="notification_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
@@ -463,7 +453,7 @@
                         <property name="can_focus">False</property>
                         <property name="spacing">12</property>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="notification_sound1">
                             <property name="label" translatable="yes">Sound 1</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -476,7 +466,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="notification_sound2">
                             <property name="label" translatable="yes">Sound 2</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
@@ -514,7 +504,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkBox" id="information_box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="orientation">vertical</property>
@@ -537,7 +527,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="information_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Vendor: Corsair
@@ -567,7 +557,7 @@ Product ID: 0a14</property>
             </child>
           </object>
           <packing>
-            <property name="name">page1</property>
+            <property name="name">devices</property>
             <property name="title" translatable="yes">Devices</property>
           </packing>
         </child>
@@ -619,6 +609,7 @@ Product ID: 0a14</property>
             </child>
           </object>
           <packing>
+            <property name="name">no_devices</property>
             <property name="title" translatable="yes">No devices</property>
             <property name="position">1</property>
           </packing>
@@ -631,7 +622,7 @@ Product ID: 0a14</property>
             <property name="row_spacing">18</property>
             <property name="column_spacing">12</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="settings_back">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -900,10 +891,53 @@ Product ID: 0a14</property>
             </child>
           </object>
           <packing>
-            <property name="name">page0</property>
+            <property name="name">settings</property>
             <property name="title" translatable="yes">Settings</property>
             <property name="position">2</property>
           </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAboutDialog" id="about_dialog">
+    <property name="can_focus">False</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">main_window</property>
+    <property name="program_name">Headset Control</property>
+    <property name="version">null</property>
+    <property name="copyright" translatable="yes">Copyright © 2020 Edwin Svensson</property>
+    <property name="website">https://github.com/olback/headset-control</property>
+    <property name="website_label" translatable="yes">Headset Control on Github</property>
+    <property name="authors">Edwin Svensson</property>
+    <property name="logo_icon_name">image-missing</property>
+    <property name="license_type">agpl-3-0</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>

@@ -32,22 +32,40 @@
 // }
 
 use gio::prelude::*;
-use gtk::prelude::*;
 use std::env::args;
+use libhc::HidApi;
+use std::sync::{Arc, Mutex};
 
 mod utils;
 mod ui;
+mod consts;
+mod ui_device;
+mod tasks;
+
 use ui::Ui;
+use ui_device::UiDevice;
 
 fn main() {
 
+    // Load resources
     utils::load_resources();
 
-    let application = gtk::Application::new(Some("net.olback.headset-control"), Default::default()).unwrap();
+    // HidApi mutex
+    let hidapi: Arc<Mutex<HidApi>> = Arc::new(Mutex::new(HidApi::new().unwrap()));
 
+    // Create app
+    let application = gtk::Application::new(Some("net.olback.headset-control"), Default::default()).unwrap();
     application.connect_activate(move |app| {
 
+        // Build UI
         let ui = Ui::build(app);
+        ui.stack.show_no_devices(false);
+
+        let hidapi_clone = hidapi.clone();
+        let device_tx = ui.devices.get_tx();
+        // TODO: Replace interval with value from settings
+        tasks::refresh_devices(&hidapi_clone, device_tx, 2);
+        tasks::command_handler(&hidapi_clone);
 
     });
 
