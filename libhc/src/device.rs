@@ -37,6 +37,21 @@ pub struct Device {
     pub play_notification: Option<PlayNotificationFn>
 }
 
+// TODO: Implement this instead!
+// Instead of Vec<u8>, use [u8; 8]?
+// #[derive(Clone)]
+// pub struct Device {
+//     pub name: String,
+//     pub kind: DeviceKind,
+//     pub vid: Option<u16>,
+//     pub pid: Option<u16>,
+//     pub mac: Option<String>,
+//     pub get_battery: Option<GetBatteryFn>,
+//     pub set_lightning: Option<(SetLightningFn, Vec<(String, Vec<u8>)>)>,
+//     pub set_sidetone: Option<(SetSidetoneFn, Vec<(String, Vec<u8>)>)>,
+//     pub actions: Option<(SetSidetoneFn, Vec<(String, Vec<u8>)>)>
+// }
+
 impl Device {
 
     pub fn usb<N: Into<String>>(
