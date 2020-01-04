@@ -14,7 +14,7 @@ pub enum DeviceKind {
 #[derive(Debug, Clone)]
 pub enum BatteryState {
     Discharging(u8),
-    Charging,
+    Charging(Option<u8>),
     Full,
     Unavailable
 }

@@ -28,7 +28,7 @@ pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> HCResult<Battery
         },
         // 4 => BatteryState::Charging,
         4 => BatteryState::Full, // TODO: is this true?
-        5 => BatteryState::Charging,
+        5 => BatteryState::Charging(None),
         _ => BatteryState::Unavailable,
     })
 
