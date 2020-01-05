@@ -46,32 +46,35 @@ impl DeviceView {
             }
         };
 
-        match device.inner.set_lightning {
-            Some(l) => {
-                self.lightning.set_visible(true);
-            },
-            None => {
-                self.lightning.set_visible(false);
-            }
-        };
+        // TODO: Implement!
+        // match device.inner.set_lightning {
+        //     Some(l) => {
+        //         self.lightning.set_visible(true);
+        //     },
+        //     None => {
+        //         self.lightning.set_visible(false);
+        //     }
+        // };
 
-        match device.inner.set_sidetone {
-            Some(s) => {
-                self.sidetone.set_visible(true);
-            },
-            None => {
-                self.sidetone.set_visible(false);
-            }
-        };
+        // TODO: Implement!
+        // match device.inner.set_sidetone {
+        //     Some(s) => {
+        //         self.sidetone.set_visible(true);
+        //     },
+        //     None => {
+        //         self.sidetone.set_visible(false);
+        //     }
+        // };
 
-        match device.inner.play_notification {
-            Some(n) => {
-                self.notification.set_visible(true);
-            },
-            None => {
-                self.notification.set_visible(false);
-            }
-        };
+        // TODO: Implement!
+        // match device.inner.actions {
+        //     Some(n) => {
+        //         self.notification.set_visible(true);
+        //     },
+        //     None => {
+        //         self.notification.set_visible(false);
+        //     }
+        // };
 
         let mut info_vec = Vec::<String>::new();
         match device.inner.vid {
