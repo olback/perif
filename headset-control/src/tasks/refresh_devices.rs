@@ -2,19 +2,31 @@ use crate::{
     utils,
     UiDevice
 };
-use std::sync::{
-    Arc,
-    Mutex
+use std::{
+    thread::JoinHandle,
+    sync::{
+        Arc,
+        Mutex,
+        atomic::{
+            AtomicBool,
+            Ordering
+        }
+    }
 };
 use libhc::HidApi;
 
-pub fn refresh_devices(hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64) {
+pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64) -> JoinHandle<()> {
 
     let hidapi = Arc::clone(&hidapi);
 
     std::thread::spawn(move || {
 
         loop {
+
+            if should_stop.load(Ordering::Acquire) {
+                println!("Stopping device thread...");
+                return;
+            }
 
             let ui_devices = utils::safe_lock(&hidapi, |hid_lock| {
 
@@ -35,8 +47,6 @@ pub fn refresh_devices(hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<
                         None => None
                     };
 
-                    println!("{:#?}", battery);
-
                     ui_devices.push(UiDevice {
                         inner: dev,
                         battery: battery
@@ -54,8 +64,6 @@ pub fn refresh_devices(hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<
 
         }
 
-    });
-
-
+    })
 
 }

@@ -22,9 +22,6 @@ pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> HCResult<Battery
         return Err(new_err!("Invalid data"));
     }
 
-    // TODO: Remove!
-    println!("0x{:02x} == {}", &buf[12], &buf[12]);
-
     // https://github.com/Jays2Kings/DS4Windows/blob/jay/DS4Windows/DS4Library/DS4Device.cs#L468
     let charging = (buf[30] & 0x10) != 0;
     let battery = (buf[30] & 0x0f) * 10;

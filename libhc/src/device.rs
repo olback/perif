@@ -20,7 +20,8 @@ pub enum BatteryState {
 }
 
 type GetBatteryFn = fn(hidapi: &hidapi::HidApi, device: &Device) -> HCResult<BatteryState>;
-type CommandFn = fn(hidapi: &hidapi::HidApi, device: &Device, data: [u8; 8]) -> HCResult<bool>;
+pub type CommandData = [u8; 8];
+pub type CommandFn = fn(hidapi: &hidapi::HidApi, device: &Device, data: CommandData) -> HCResult<bool>;
 
 #[derive(Clone)]
 pub struct Device {
@@ -30,9 +31,9 @@ pub struct Device {
     pub pid: Option<u16>,
     pub mac: Option<String>,
     pub get_battery: Option<GetBatteryFn>,
-    pub set_lightning: Option<(CommandFn, Vec<(String, [u8; 8])>)>,
+    pub set_lightning: Option<(CommandFn, Vec<(String, CommandData)>)>,
     pub set_sidetone: Option<CommandFn>,
-    pub commands: Option<(CommandFn, Vec<(String, [u8; 8])>)>
+    pub commands: Option<(CommandFn, Vec<(String, CommandData)>)>
 }
 
 impl Device {
@@ -43,9 +44,9 @@ impl Device {
         vid: u16,
         pid: u16,
         get_battery: Option<GetBatteryFn>,
-        set_lightning: Option<(CommandFn, Vec<(String, [u8; 8])>)>,
+        set_lightning: Option<(CommandFn, Vec<(String, CommandData)>)>,
         set_sidetone: Option<CommandFn>,
-        commands: Option<(CommandFn, Vec<(String, [u8; 8])>)>
+        commands: Option<(CommandFn, Vec<(String, CommandData)>)>
     ) -> Device {
         Device {
             name: name.into(),

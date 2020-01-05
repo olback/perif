@@ -1,7 +1,7 @@
 mod macros;
 
 mod device;
-pub use device::{Device, BatteryState, DeviceKind};
+pub use device::{Device, BatteryState, CommandData, CommandFn, DeviceKind};
 
 mod error;
 pub use error::{HCError, HCResult};

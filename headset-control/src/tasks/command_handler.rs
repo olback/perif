@@ -1,23 +1,80 @@
-use std::sync::{
-    Arc,
-    Mutex
+use std::{
+    thread::JoinHandle,
+    sync::{
+        Arc,
+        Mutex,
+        mpsc
+    }
 };
 use libhc::{
     Device,
-    HidApi
+    HidApi,
+    CommandData,
+    CommandFn,
+    new_err,
+    HCResult
 };
+use crate::utils;
 
 pub struct Command {
-    pointer: fn(hidapi: &HidApi, device: &Device, data: Vec<u8>) -> bool,
-    data: Vec<u8>
+    pointer: CommandFn,
+    data: CommandData,
+    device: Device
 }
 
-pub fn command_handler(hidapi: &Arc<Mutex<HidApi>>) {
+impl Command {
 
-    println!("Command handler not implemented!");
+    pub fn run(&self, hidapi: &HidApi) -> HCResult<bool> {
 
-    // std::thread::spawn(move || {
+        let ptr = self.pointer;
+        ptr(&hidapi, &self.device, self.data)
 
-    // });
+    }
+
+}
+
+pub fn command_handler(hidapi: &Arc<Mutex<HidApi>>) -> (JoinHandle<()>, mpsc::Sender<Option<Command>>) {
+
+    let hidapi_clone = Arc::clone(&hidapi);
+    let (tx, rx) = mpsc::channel::<Option<Command>>();
+
+    (std::thread::spawn(move || {
+
+        loop {
+
+            match rx.recv() {
+
+                Ok(command) => {
+
+                    match command {
+
+                        Some(cmd) => {
+
+                            utils::safe_lock(&hidapi_clone, |lock| {
+
+                                cmd.run(&lock);
+
+                            });
+
+                        },
+                        None => break // Send `None` to end listening
+
+                    }
+
+                },
+                Err(e) => {
+
+                    eprintln!("{}", new_err!(e));
+                    break;
+
+                }
+
+            }
+
+        }
+
+        println!("Stopping command thread...");
+
+    }), tx)
 
 }
