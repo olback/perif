@@ -6,3 +6,7 @@
 * [ ] Budgie Applet
 * [x] Add icon identifier to `Device`
 * [ ] Connect settings
+* [ ] Fix DS4 Wireless
+* [ ] Restructure Commands/Notif/Lightning
+* [ ] Handle results
+* [ ] Command result
