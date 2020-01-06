@@ -5,10 +5,12 @@ use crate::{
 
 mod corsair;
 mod sony;
+mod audio_technica;
 
 fn supported_devices() -> Vec<Device> {
 
     vec![
+        // audio_technica::supported_devices(),
         corsair::supported_devices(),
         sony::supported_devices()
     ].concat()
