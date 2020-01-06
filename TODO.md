@@ -10,3 +10,4 @@
 * [x] Restructure Commands/Notif/Lightning
 * [ ] Handle results
 * [ ] Command result
+* [ ] Rename!

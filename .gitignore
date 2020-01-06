@@ -1,3 +1,5 @@
 \#*.glade\#
 *.glade~
 /target/
+/test_target/
+/build/

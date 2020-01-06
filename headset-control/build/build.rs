@@ -2,8 +2,6 @@ mod out;
 mod resources;
 mod glade;
 
-use std::env;
-
 fn main() {
 
     println!("cargo:rerun-if-changed=.git/HEAD");
