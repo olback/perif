@@ -13,21 +13,21 @@ use super::{
     device_view::DeviceView
 };
 
-pub struct Devices {
+pub struct DevicesView {
     devices: Arc<Mutex<Vec<UiDevice>>>,
     device_list: gtk::ListBox,
     device_view: DeviceView,
     tx: glib::Sender<Vec<UiDevice>>
 }
 
-impl Devices {
+impl DevicesView {
 
-    pub fn build(builder: &gtk::Builder, stack: &Stack) -> Devices {
+    pub fn build(builder: &gtk::Builder, stack: &Stack, devices: &Arc<Mutex<Vec<UiDevice>>>) -> DevicesView {
 
         let (tx, rx) = glib::MainContext::channel::<Vec<UiDevice>>(glib::PRIORITY_DEFAULT);
 
-        let inner = Devices {
-            devices: Arc::new(Mutex::new(Vec::new())),
+        let inner = DevicesView {
+            devices: Arc::clone(&devices),
             device_list: builder.get_object("device_list").expect("could not get device_list"),
             device_view: DeviceView::build(&builder),
             tx

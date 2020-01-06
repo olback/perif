@@ -1,20 +1,30 @@
 use gtk::prelude::*;
+use crate::{
+    ui_device::UiDevice,
+    utils
+};
+use std::sync::{
+    Arc,
+    Mutex
+};
 
 #[derive(Clone)]
 pub struct Stack {
     inner: gtk::Stack,
-    transition: gtk::StackTransitionType
+    transition: gtk::StackTransitionType,
+    devices: Arc<Mutex<Vec<UiDevice>>>
 }
 
 impl Stack {
 
-    pub fn build(builder: &gtk::Builder) -> Stack {
+    pub fn build(builder: &gtk::Builder, devices: &Arc<Mutex<Vec<UiDevice>>>) -> Stack {
 
         let stack: gtk::Stack = builder.get_object("views").expect("could not find views");
 
         Stack {
             transition: stack.get_transition_type(),
-            inner: stack
+            inner: stack,
+            devices: Arc::clone(&devices)
         }
 
     }
@@ -22,7 +32,16 @@ impl Stack {
     pub fn show_devices(&self, transition: bool) {
 
         self.enable_transition(transition);
-        self.inner.set_visible_child_name("devices");
+
+        let len = utils::safe_lock(&self.devices, |devices| {
+            devices.len()
+        });
+
+        if len > 0 {
+            self.inner.set_visible_child_name("devices");
+        } else {
+            self.show_no_devices(transition);
+        }
 
     }
 
@@ -42,8 +61,7 @@ impl Stack {
 
     pub fn hide_settings(&self, transition: bool) {
 
-        self.enable_transition(transition);
-        self.inner.set_visible_child_name("devices");
+        self.show_devices(transition);
 
     }
 

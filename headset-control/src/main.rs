@@ -1,36 +1,3 @@
-// use libhc;
-
-// fn main() {
-
-//     let mut hidapi = libhc::hidapi::HidApi::new().unwrap();
-//     let devices = libhc::get_available_devices(&mut hidapi).unwrap();
-
-//     for device in devices {
-
-//         match device.get_battery {
-//             Some(get_battery) => println!("get_battery {:#?}", get_battery(&hidapi, &device)),
-//             None => println!("get_battery not supported")
-//         };
-
-//         match device.set_lightning {
-//             Some(set_lightning) => println!("set_lightning {:#?}", set_lightning(&hidapi, &device, 0)),
-//             None => println!("set_lightning not supported")
-//         };
-
-//         match device.set_sidetone {
-//             Some(set_sidetone) => println!("set_sidetone {:#?}", set_sidetone(&hidapi, &device, 0)),
-//             None => println!("set_sidetone not supported")
-//         };
-
-//         match device.play_notification {
-//             Some(play_notification) => println!("play_notification {:#?}", play_notification(&hidapi, &device, 0)),
-//             None => println!("play_notification not supported")
-//         };
-
-//     }
-
-// }
-
 use gio::prelude::*;
 use std::env::args;
 use libhc::HidApi;
@@ -67,7 +34,7 @@ fn main() {
         ui.stack.show_no_devices(false);
 
         let hidapi_clone = hidapi.clone();
-        let device_tx = ui.devices.get_tx();
+        let device_tx = ui.devices_view.get_tx();
         let command_tx = utils::safe_lock(&task_handler_clone, move |handler| {
 
             let (command_handle, command_tx) = tasks::command_handler(&hidapi_clone);
