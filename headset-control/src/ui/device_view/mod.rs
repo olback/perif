@@ -4,7 +4,7 @@ use crate::UiDevice;
 mod battery;
 mod lightning;
 mod sidetone;
-mod notification;
+mod commands;
 mod information;
 
 #[derive(Clone)]
@@ -13,8 +13,9 @@ pub struct DeviceView {
     battery: battery::Battery,
     lightning: lightning::Lightning,
     sidetone: sidetone::Sidetone,
-    notification: notification::Notification,
-    information: information::Information
+    commands: commands::Commands,
+    information: information::Information,
+    error_output: gtk::Label
 }
 
 impl DeviceView {
@@ -26,8 +27,9 @@ impl DeviceView {
             battery: battery::Battery::build(&builder),
             lightning: lightning::Lightning::build(&builder),
             sidetone: sidetone::Sidetone::build(&builder),
-            notification: notification::Notification::build(&builder),
-            information: information::Information::build(&builder)
+            commands: commands::Commands::build(&builder),
+            information: information::Information::build(&builder),
+            error_output: builder.get_object("error_output").expect("could not get error_output")
         }
 
     }
@@ -47,34 +49,34 @@ impl DeviceView {
         };
 
         // TODO: Implement!
-        // match device.inner.set_lightning {
-        //     Some(l) => {
-        //         self.lightning.set_visible(true);
-        //     },
-        //     None => {
-        //         self.lightning.set_visible(false);
-        //     }
-        // };
+        match device.inner.set_lightning {
+            Some(l) => {
+                self.lightning.set_visible(true);
+            },
+            None => {
+                self.lightning.set_visible(false);
+            }
+        };
 
         // TODO: Implement!
-        // match device.inner.set_sidetone {
-        //     Some(s) => {
-        //         self.sidetone.set_visible(true);
-        //     },
-        //     None => {
-        //         self.sidetone.set_visible(false);
-        //     }
-        // };
+        match device.inner.set_sidetone {
+            Some(s) => {
+                self.sidetone.set_visible(true);
+            },
+            None => {
+                self.sidetone.set_visible(false);
+            }
+        };
 
         // TODO: Implement!
-        // match device.inner.actions {
-        //     Some(n) => {
-        //         self.notification.set_visible(true);
-        //     },
-        //     None => {
-        //         self.notification.set_visible(false);
-        //     }
-        // };
+        match device.inner.commands {
+            Some(n) => {
+                self.commands.set_visible(true);
+            },
+            None => {
+                self.commands.set_visible(false);
+            }
+        };
 
         let mut info_vec = Vec::<String>::new();
         match device.inner.vid {
