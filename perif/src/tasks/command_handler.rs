@@ -16,6 +16,11 @@ use libperif::{
 };
 use crate::utils;
 
+pub enum CommandResult {
+    Success(String),
+    Error(String)
+}
+
 pub struct Command {
     pointer: CommandFn,
     data: CommandData,
@@ -33,7 +38,7 @@ impl Command {
 
 }
 
-pub fn command_handler(hidapi: &Arc<Mutex<HidApi>>) -> (JoinHandle<()>, mpsc::Sender<Option<Command>>) {
+pub fn command_handler(hidapi: &Arc<Mutex<HidApi>>, result_tx: glib::Sender<CommandResult>) -> (JoinHandle<()>, mpsc::Sender<Option<Command>>) {
 
     let hidapi_clone = Arc::clone(&hidapi);
     let (tx, rx) = mpsc::channel::<Option<Command>>();
@@ -52,7 +57,10 @@ pub fn command_handler(hidapi: &Arc<Mutex<HidApi>>) -> (JoinHandle<()>, mpsc::Se
 
                             utils::safe_lock(&hidapi_clone, |lock| {
 
-                                cmd.run(&lock);
+                                match cmd.run(&lock) {
+                                    Ok(_) => result_tx.send(CommandResult::Success(String::from("Success"))).unwrap(),
+                                    Err(e) => result_tx.send(CommandResult::Error(format!("{}", e))).unwrap()
+                                }
 
                             });
 

@@ -1,5 +1,8 @@
 use gtk::prelude::*;
-use crate::UiDevice;
+use crate::{
+    UiDevice,
+    tasks::CommandResult
+};
 
 mod battery;
 mod lightning;
@@ -15,12 +18,39 @@ pub struct DeviceView {
     sidetone: sidetone::Sidetone,
     commands: commands::Commands,
     information: information::Information,
-    error_output: gtk::Label
+    result_tx: glib::Sender<CommandResult>
 }
 
 impl DeviceView {
 
     pub fn build(builder: &gtk::Builder) -> DeviceView {
+
+        // Handle close event
+        let result_infobar: gtk::InfoBar = builder.get_object("result_infobar").expect("could not get result_infobar");
+        let result_output: gtk::Label = builder.get_object("result_output").expect("could not get result_output");
+        result_infobar.connect_response(|info_bar, _| {
+            info_bar.set_visible(false);
+        });
+
+        let (tx, rx) = glib::MainContext::channel::<CommandResult>(glib::PRIORITY_DEFAULT);
+        rx.attach(None, move |res| {
+
+            match res {
+                CommandResult::Success(msg) => {
+                    result_infobar.set_message_type(gtk::MessageType::Info);
+                    result_output.set_text(msg.as_str());
+                },
+                CommandResult::Error(msg) => {
+                    result_infobar.set_message_type(gtk::MessageType::Error);
+                    result_output.set_text(msg.as_str());
+                }
+            }
+
+            result_infobar.set_visible(true);
+
+            glib::Continue(true)
+
+        });
 
         DeviceView {
             name: builder.get_object("device_name").expect("could not get device_name"),
@@ -29,8 +59,14 @@ impl DeviceView {
             sidetone: sidetone::Sidetone::build(&builder),
             commands: commands::Commands::build(&builder),
             information: information::Information::build(&builder),
-            error_output: builder.get_object("error_output").expect("could not get error_output")
+            result_tx: tx
         }
+
+    }
+
+    pub fn get_tx(&self) -> glib::Sender<CommandResult> {
+
+        self.result_tx.clone()
 
     }
 

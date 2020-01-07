@@ -5,9 +5,9 @@
 * [ ] `libperif` Vala bindings (vapi)
 * [ ] Budgie Applet
 * [x] Add icon identifier to `Device`
-* [ ] Connect settings
+* [x] Connect settings
 * [ ] Fix DS4 Wireless
 * [x] Restructure Commands/Notif/Lightning
-* [ ] Handle results
-* [ ] Command result
-* [x] Rename!
+* [x] Handle results
+* [x] Command result
+* [x] Rename

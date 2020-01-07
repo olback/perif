@@ -29,18 +29,24 @@ fn main() {
     let application = gtk::Application::new(Some("net.olback.Perif"), Default::default()).unwrap();
     application.connect_activate(move |app| {
 
+        // Load settings
+        let settings = gio::Settings::new("net.olback.perif");
+        let enable_usb = settings.get_boolean("usb-devices");
+        let enable_bt = settings.get_boolean("bluetooth-devices");
+
         // Build UI
-        let ui = Ui::build(app);
+        let ui = Ui::build(app, settings);
         ui.stack.show_no_devices(false);
 
         let hidapi_clone = hidapi.clone();
-        let device_tx = ui.devices_view.get_tx();
+        let device_tx = ui.devices_view.get_devices_tx();
+        let result_tx = ui.devices_view.get_error_tx();
         let command_tx = utils::safe_lock(&task_handler_clone, move |handler| {
 
-            let (command_handle, command_tx) = tasks::command_handler(&hidapi_clone);
+            let (command_handle, command_tx) = tasks::command_handler(&hidapi_clone, result_tx);
 
             handler.add(command_handle);
-            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, 1));
+            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, (enable_usb, enable_bt), 1));
 
             command_tx
 

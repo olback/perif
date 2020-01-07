@@ -2,7 +2,8 @@ use gtk::prelude::*;
 use libperif::DeviceKind;
 use crate::{
     ui_device::UiDevice,
-    utils
+    utils,
+    tasks::CommandResult
 };
 use std::sync::{
     Arc,
@@ -139,8 +140,12 @@ impl DevicesView {
 
     }
 
-    pub fn get_tx(&self) -> glib::Sender<Vec<UiDevice>> {
+    pub fn get_devices_tx(&self) -> glib::Sender<Vec<UiDevice>> {
         self.tx.clone()
+    }
+
+    pub fn get_error_tx(&self) -> glib::Sender<CommandResult> {
+        self.device_view.get_tx()
     }
 
 }

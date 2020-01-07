@@ -12,7 +12,7 @@ macro_rules! is_debug {
         if cfg!(debug_assertions) {
             true
         } else {
-            std::env::var("HC_DEBUG").is_ok()
+            std::env::var("PERIF_DEBUG").is_ok()
         }
     };
 }
