@@ -1,5 +1,5 @@
 # Todo:
-* [ ] Icon / Logo
+* [x] Icon / Logo
 * [ ] Figure out bluetooth (blueZ)
 * [x] Figure out hidapi
 * [ ] `libperif` Vala bindings (vapi)

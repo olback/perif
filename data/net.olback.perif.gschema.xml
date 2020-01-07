@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<schemalist gettext-domain="perif">
+
+    <schema path="/net/olback/perif/" id="net.olback.perif">
+
+        <key type="b" name="usb-devices">
+            <default>true</default>
+            <summary>Enable USB support</summary>
+            <description>
+                Try to detect USB devices such as headsets
+            </description>
+        </key>
+
+        <key type="b" name="bluetooth-devices">
+            <default>true</default>
+            <summary>Enable Bluetooth support</summary>
+            <description>
+                Try to detect bluetooth devices such as headphones and wacom tablets
+            </description>
+        </key>
+
+    </schema>
+
+</schemalist>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 Edwin Svensson -->
+<component type="desktop">
+  <id>net.olback.Perif.desktop</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>AGPL-3.0-or-later</project_license>
+  <name>Perif</name>
+  <summary>Control your peripherals</summary>
+  <description>
+    <p>
+      /* ! TODO: */
+    </p>
+  </description>
+  <screenshots>
+    <screenshot>
+      <image>https://github.com/olback/perif/blob/master/images/devices.png</image>
+      <caption>Showing connected devices</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/olback/perif/blob/master/images/settings.png</image>
+      <caption>Showing settings</caption>
+    </screenshot>
+  </screenshots>
+  <update_contact>perif_at_olback.net</update_contact>
+  <developer_name>olback</developer_name>
+  <url type="homepage">https://github.com/olback/perif/blob/master/README.md</url>
+  <url type="bugtracker">https://github.com/olback/perif/issues</url>
+  <url type="donation">https://github.com/sponsors/olback</url>
+  <url type="help">https://github.com/olback/perif/issues</url>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1.0" date="2020-01-07">
+      <description>
+        <p>Overview of changes in Perif 0.3.0</p>
+        <ul>
+          <li>Initial release</li>
+        </ul>
+      </description>
+    </release>
+    <!-- <release version="0.3.0" date="2020-01-07">
+      <description>
+        <p>Overview of changes in Perif 0.3.0</p>
+        <ul>
+          <li>Initial release</li>
+        </ul>
+      </description>
+    </release> -->
+  </releases>
+</component>

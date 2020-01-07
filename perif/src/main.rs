@@ -26,7 +26,7 @@ fn main() {
 
     // Create app
     let task_handler_clone = Arc::clone(&task_handler);
-    let application = gtk::Application::new(Some("net.olback.perif"), Default::default()).unwrap();
+    let application = gtk::Application::new(Some("net.olback.Perif"), Default::default()).unwrap();
     application.connect_activate(move |app| {
 
         // Build UI

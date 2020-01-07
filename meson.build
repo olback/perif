@@ -4,15 +4,12 @@ project(
 )
 
 bindir = get_option('bindir')
+sysconfdir = get_option('sysconfdir')
 
 # Binary
 install_data('target/release/perif', install_dir: bindir)
 
 # Udev rules
-install_subdir('udev', install_dir: '/home/olback/Desktop/perif/test_target')
+install_subdir('udev', install_dir: sysconfdir)
 
-# Todo:
-# * Icons
-# * GSchema
-# * Desktop file
-# * Appdata
+subdir('data')
