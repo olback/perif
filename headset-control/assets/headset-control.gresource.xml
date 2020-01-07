@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gresources>
-    <gresource prefix="/net/olback/headset-control">
-        <file alias="ui" preprocess="xml-stripblanks">out/headset-control.glade</file>
-    </gresource>
-</gresources>

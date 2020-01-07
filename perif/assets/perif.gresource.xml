@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/net/olback/perif">
+        <file alias="ui" preprocess="xml-stripblanks">out/perif.glade</file>
+    </gresource>
+</gresources>

@@ -1,0 +1,17 @@
+[package]
+name = "perif"
+version = "0.1.0"
+authors = ["Edwin Svensson <git@olback.net>"]
+edition = "2018"
+build = "build/build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+libperif = { path = "../libperif" }
+gtk = "0.8"
+gio = "0.8"
+glib = "0.9"
+
+[build-dependencies]
+regex = "1"

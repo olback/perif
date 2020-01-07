@@ -2,7 +2,7 @@
 * [ ] Icon / Logo
 * [ ] Figure out bluetooth (blueZ)
 * [x] Figure out hidapi
-* [ ] `libhc` Vala bindings (vapi)
+* [ ] `libperif` Vala bindings (vapi)
 * [ ] Budgie Applet
 * [x] Add icon identifier to `Device`
 * [ ] Connect settings
@@ -10,4 +10,4 @@
 * [x] Restructure Commands/Notif/Lightning
 * [ ] Handle results
 * [ ] Command result
-* [ ] Rename!
+* [x] Rename!

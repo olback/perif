@@ -1,7 +1,7 @@
 project(
     'Perif',
     default_options: ['prefix=/usr']
-    )
+)
 
 bindir = get_option('bindir')
 
