@@ -1,14 +1,14 @@
 use crate::{
-    device::Device,
+    device::SupportedDevice,
     device::DeviceKind
 };
 
 mod dualshock4;
 
-pub fn supported_devices() -> Vec<Device> {
+pub fn supported_devices() -> Vec<SupportedDevice> {
 
     vec![
-        Device::usb(
+        SupportedDevice::new(
             "Dualshock 4 Wireless",
             DeviceKind::Controller,
             0x054cu16,
@@ -18,7 +18,7 @@ pub fn supported_devices() -> Vec<Device> {
             None,
             None
         ),
-        Device::usb(
+        SupportedDevice::new(
             "Dualshock 4",
             DeviceKind::Controller,
             0x054cu16,
@@ -28,7 +28,7 @@ pub fn supported_devices() -> Vec<Device> {
             None,
             None
         ),
-        Device::usb(
+        SupportedDevice::new(
             "Dualshock 4",
             DeviceKind::Controller,
             0x054cu16,

@@ -15,7 +15,7 @@ const DS4_BUF_LEN: usize = 64;
 
 pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState> {
 
-    let hid_dev = hidapi.open(device.vid.unwrap(), device.pid.unwrap())?;
+    let hid_dev = hidapi.open_path(&device.path)?;
 
     let mut buf = [0; DS4_BUF_LEN];
 

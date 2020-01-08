@@ -1,4 +1,5 @@
 use crate::PerifResult;
+use std::ffi::CString;
 
 #[derive(Debug, Clone)]
 pub enum DeviceKind {
@@ -27,18 +28,33 @@ pub type CommandFn = fn(hidapi: &hidapi::HidApi, device: &Device, data: CommandD
 pub struct Device {
     pub name: String,
     pub kind: DeviceKind,
-    pub vid: Option<u16>,
-    pub pid: Option<u16>,
-    pub mac: Option<String>,
+    pub path: CString,
+    pub vid: u16,
+    pub pid: u16,
+    pub serial: Option<String>,
+    pub manufacturer_string: Option<String>,
+    pub product_string: Option<String>,
     pub get_battery: Option<GetBatteryFn>,
     pub set_lightning: Option<(CommandFn, Vec<(String, CommandData)>)>,
     pub set_sidetone: Option<CommandFn>,
     pub commands: Option<(CommandFn, Vec<(String, CommandData)>)>
 }
 
-impl Device {
+#[derive(Clone)]
+pub struct SupportedDevice {
+    pub name: String,
+    pub kind: DeviceKind,
+    pub vid: u16,
+    pub pid: u16,
+    pub get_battery: Option<GetBatteryFn>,
+    pub set_lightning: Option<(CommandFn, Vec<(String, CommandData)>)>,
+    pub set_sidetone: Option<CommandFn>,
+    pub commands: Option<(CommandFn, Vec<(String, CommandData)>)>
+}
 
-    pub fn usb<N: Into<String>>(
+impl SupportedDevice {
+
+    pub fn new<N: Into<String>>(
         name: N,
         kind: DeviceKind,
         vid: u16,
@@ -47,34 +63,17 @@ impl Device {
         set_lightning: Option<(CommandFn, Vec<(String, CommandData)>)>,
         set_sidetone: Option<CommandFn>,
         commands: Option<(CommandFn, Vec<(String, CommandData)>)>
-    ) -> Device {
-        Device {
+    ) -> SupportedDevice {
+        SupportedDevice {
             name: name.into(),
             kind: kind,
-            vid: Some(vid.into()),
-            pid: Some(pid.into()),
-            mac: None,
+            vid: vid.into(),
+            pid: pid.into(),
             get_battery: get_battery,
             set_lightning: set_lightning,
             set_sidetone: set_sidetone,
             commands: commands
         }
-    }
-
-    pub fn bluetooth<N: Into<String>, M: Into<String>>(name: N, mac: M) -> Device {
-
-        Device {
-            name: name.into(),
-            kind: DeviceKind::Bluetooth,
-            vid: None,
-            pid: None,
-            mac: Some(mac.into()),
-            get_battery: None,
-            set_lightning: None,
-            set_sidetone: None,
-            commands: None
-        }
-
     }
 
 }

@@ -8,7 +8,7 @@ use crate::{
 
 pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState> {
 
-    let hid_dev = hidapi.open(device.vid.unwrap(), device.pid.unwrap())?;
+    let hid_dev = hidapi.open_path(&device.path)?;
 
     // Request battery
     hid_dev.write(&[0xc9, 0x64])?;

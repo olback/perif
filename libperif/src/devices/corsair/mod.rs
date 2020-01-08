@@ -1,14 +1,14 @@
 use crate::{
-    device::Device,
+    device::SupportedDevice,
     device::DeviceKind
 };
 
 mod void;
 
-pub fn supported_devices() -> Vec<Device> {
+pub fn supported_devices() -> Vec<SupportedDevice> {
 
     vec![
-        Device::usb(
+        SupportedDevice::new(
             "Corsair Void Pro Wireless",
             DeviceKind::Headset,
             0x1b1cu16,

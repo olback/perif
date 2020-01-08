@@ -115,18 +115,8 @@ impl DeviceView {
         };
 
         let mut info_vec = Vec::<String>::new();
-        match device.inner.vid {
-            Some(vid) => info_vec.push(format!("Vendor ID: {:04x}", vid)),
-            None => {}
-        };
-        match device.inner.pid {
-            Some(pid) => info_vec.push(format!("Product ID: {:04x}", pid)),
-            None => {}
-        };
-        match device.inner.mac {
-            Some(mac) => info_vec.push(format!("MAC: {}", mac)),
-            None => {}
-        };
+        info_vec.push(format!("Vendor ID: {:04x}", device.inner.vid));
+        info_vec.push(format!("Product ID: {:04x}", device.inner.pid));
 
         if info_vec.len() > 0 {
             let info_string = info_vec.join("\n");
