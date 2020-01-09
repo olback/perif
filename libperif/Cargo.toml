@@ -7,6 +7,14 @@ edition = "2018"
 [lib]
 crate-type = ["rlib", "staticlib"]
 
+[[bin]]
+name = "gen-rules"
+path = "src/bin/gen_rules.rs"
+
+[[bin]]
+name = "gen-list"
+path = "src/bin/gen_list.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

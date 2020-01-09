@@ -1,0 +1,11 @@
+Corsair Void Wireless 1b1c:1b27
+Corsair Void Pro 1b1c:0a14
+Corsair Void Pro R2 1b1c:0a16
+Corsair Void Pro USB 1b1c:0a17
+Corsair Void Pro Wireless 1b1c:0a1a
+Corsair Void RGB USB 1b1c:1b2a
+Corsair Void RGB USB 2 1b1c:1b23
+Corsair Void RGB Wired 1b1c:1b1c
+Dualshock 4 Wireless 054c:0ba0
+Dualshock 4 054c:05c4
+Dualshock 4 054c:09cc

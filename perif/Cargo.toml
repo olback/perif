@@ -4,6 +4,7 @@ version = "0.2.0"
 authors = ["Edwin Svensson <git@olback.net>"]
 edition = "2018"
 build = "build/build.rs"
+default-run = "perif"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

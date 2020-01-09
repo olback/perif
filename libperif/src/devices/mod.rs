@@ -11,7 +11,7 @@ mod corsair;
 mod sony;
 // mod wacom;
 
-fn supported_devices() -> Vec<SupportedDevice> {
+pub fn get_supported_devices() -> Vec<SupportedDevice> {
 
     vec![
         // audio_technica::supported_devices(),
@@ -29,7 +29,7 @@ pub fn get_available_devices(hidapi: &mut hidapi::HidApi) -> PerifResult<Vec<Dev
     hidapi.refresh_devices()?;
 
     for hid_dev in hidapi.devices() {
-        for supported in supported_devices() {
+        for supported in get_supported_devices() {
             if hid_dev.vendor_id == supported.vid && hid_dev.product_id == supported.pid {
                 available.push(Device {
                     name: supported.name,

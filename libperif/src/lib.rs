@@ -7,7 +7,7 @@ mod error;
 pub use error::{PerifError, PerifResult};
 
 mod devices;
-pub use devices::get_available_devices;
+pub use devices::{get_supported_devices, get_available_devices};
 
 pub mod utils;
 

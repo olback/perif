@@ -13,6 +13,7 @@ Before you install Perif, make sure you have installed:
 ```terminal
 git clone https://github.com/olback/perif && cd perif
 cargo build --release
+cargo run --release --bin gen-rules
 meson build
 sudo ninja -C build install
 ```
