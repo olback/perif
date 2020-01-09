@@ -1,6 +1,9 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{
+    Arc,
+    Mutex
+};
 
-// ? TODO: Make this a spin-lock?
+// Spinlocks in user-space is not recomended
 
 pub fn safe_lock<R, F, T>(state: &Arc<Mutex<T>>, f: F) -> R
     where F: FnOnce(&mut T) -> R {
@@ -9,14 +12,17 @@ pub fn safe_lock<R, F, T>(state: &Arc<Mutex<T>>, f: F) -> R
 
     let r: R;
 
-    match l_state.try_lock().as_mut() {
+    loop {
 
-        Ok(lock) => {
-            r = f(&mut **lock);
-            drop(lock);
-        },
-        Err(_) => {
-            unreachable!("Deadlock!");
+        match l_state.try_lock().as_mut() {
+
+            Ok(lock) => {
+                r = f(&mut **lock);
+                drop(lock);
+                break;
+            },
+            Err(_) => std::sync::atomic::spin_loop_hint()
+
         }
 
     }

@@ -13,6 +13,7 @@ use crate::{
 
 const DS4_BUF_LEN: usize = 64;
 
+// TODO: Improve reliability
 pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState> {
 
     let hid_dev = hidapi.open_path(&device.path)?;

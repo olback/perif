@@ -1,8 +1,9 @@
 use gtk::prelude::*;
 use crate::{
     UiDevice,
-    tasks::CommandResult
+    tasks::{Command, CommandResult}
 };
+use std::sync::mpsc;
 
 mod battery;
 mod lightning;
@@ -70,13 +71,12 @@ impl DeviceView {
 
     }
 
-    pub fn show_device(&self, device: UiDevice) {
+    pub fn show_device(&self, device: UiDevice, update: bool) {
 
-        self.name.set_text(&device.inner.name);
-
-        match device.battery {
+        // Always update battery
+        match &device.battery {
             Some(b) => {
-                self.battery.set_battery(b);
+                self.battery.set_battery(b.clone());
                 self.battery.set_visible(true);
             },
             None => {
@@ -84,47 +84,87 @@ impl DeviceView {
             }
         };
 
-        // TODO: Implement!
-        match device.inner.set_lightning {
-            Some(l) => {
-                self.lightning.set_visible(true);
-            },
-            None => {
-                self.lightning.set_visible(false);
+        if update {
+
+            self.name.set_text(&device.inner.name);
+
+            match &device.inner.set_lightning {
+                Some(l) => {
+                    self.lightning.set_visible(true);
+                    self.lightning.set_commands(l.clone(), device.clone());
+                },
+                None => {
+                    self.lightning.set_visible(false);
+                }
+            };
+
+            match &device.inner.set_sidetone {
+                Some(s) => {
+                    self.sidetone.set_visible(true);
+                    self.sidetone.set_command(s.clone(), device.clone());
+                },
+                None => {
+                    self.sidetone.set_visible(false);
+                }
+            };
+
+            match &device.inner.commands {
+                Some(n) => {
+                    self.commands.set_visible(true);
+                    self.commands.set_commands(n.clone(), device.clone());
+                },
+                None => {
+                    self.commands.set_visible(false);
+                }
+            };
+
+            let mut info_vec = Vec::<String>::new();
+            info_vec.push(format!("Path: {}", device.inner.path.into_string().unwrap()));
+            info_vec.push(format!("Vendor ID: {:04x}", device.inner.vid));
+            info_vec.push(format!("Product ID: {:04x}", device.inner.pid));
+
+            match device.inner.serial {
+                Some(serial) => if serial.len() > 0 { info_vec.push(format!("Serial: {}", serial)) },
+                None => {}
             }
-        };
 
-        // TODO: Implement!
-        match device.inner.set_sidetone {
-            Some(s) => {
-                self.sidetone.set_visible(true);
-            },
-            None => {
-                self.sidetone.set_visible(false);
+            match device.inner.manufacturer_string {
+                Some(mfr) => if mfr.len() > 0 { info_vec.push(format!("Manufacturer: {}", mfr)) },
+                None => {}
             }
-        };
 
-        // TODO: Implement!
-        match device.inner.commands {
-            Some(n) => {
-                self.commands.set_visible(true);
-            },
-            None => {
-                self.commands.set_visible(false);
+            match device.inner.product_string {
+                Some(prd) => if prd.len() > 0 { info_vec.push(format!("Product: {}", prd)) },
+                None => {}
             }
-        };
 
-        let mut info_vec = Vec::<String>::new();
-        info_vec.push(format!("Vendor ID: {:04x}", device.inner.vid));
-        info_vec.push(format!("Product ID: {:04x}", device.inner.pid));
+            if info_vec.len() > 0 {
+                let info_string = info_vec.join("\n");
+                self.information.set_text(info_string);
+                self.information.set_visible(true);
+            } else {
+                self.information.set_visible(false);
+            }
 
-        if info_vec.len() > 0 {
-            let info_string = info_vec.join("\n");
-            self.information.set_text(info_string);
-            self.information.set_visible(true);
-        } else {
-            self.information.set_visible(false);
         }
+
+    }
+
+    pub fn connect_lightning(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+
+        self.lightning.connect(command_tx);
+
+    }
+
+    pub fn connect_sidetone(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+
+        self.sidetone.connect(command_tx);
+
+    }
+
+    pub fn connect_commands(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+
+        self.commands.connect(command_tx);
 
     }
 

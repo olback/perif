@@ -14,6 +14,20 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkListStore" id="lightning_list_store">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name gchararray2 -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">aaaa</col>
+        <col id="1" translatable="yes">bbbb</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkPopoverMenu" id="popovermenu1">
     <property name="can_focus">False</property>
     <property name="border_width">12</property>
@@ -24,9 +38,9 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkModelButton" id="open_settings">
-            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
+            <property name="no_show_all">True</property>
             <property name="text" translatable="yes">Settings</property>
           </object>
           <packing>
@@ -159,48 +173,7 @@
                               <object class="GtkLabel">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Corsair Void (Pro)</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkListBoxRow">
-                        <property name="width_request">100</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <child>
-                          <object class="GtkBox">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_left">10</property>
-                            <property name="margin_right">12</property>
-                            <property name="spacing">6</property>
-                            <child>
-                              <object class="GtkImage">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="icon_name">bluetooth-active-symbolic</property>
-                                <property name="icon_size">3</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">Jaybirds X3</property>
+                                <property name="label" translatable="yes">null</property>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -243,7 +216,7 @@
                       <object class="GtkLabel" id="device_name">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Corsair Void (Pro)</property>
+                        <property name="label" translatable="yes">null</property>
                         <property name="xalign">0</property>
                         <attributes>
                           <attribute name="weight" value="bold"/>
@@ -282,7 +255,7 @@
                           <object class="GtkLabel" id="battery_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">58%</property>
+                            <property name="label" translatable="yes">null</property>
                             <attributes>
                               <attribute name="scale" value="1.2"/>
                             </attributes>
@@ -329,7 +302,7 @@
                             <property name="can_focus">False</property>
                             <property name="spacing">12</property>
                             <child>
-                              <object class="GtkComboBox" id="lightning_input">
+                              <object class="GtkComboBoxText" id="lightning_input">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
@@ -459,7 +432,7 @@
                             <property name="can_focus">False</property>
                             <property name="spacing">12</property>
                             <child>
-                              <object class="GtkComboBox" id="commands_input">
+                              <object class="GtkComboBoxText" id="commands_input">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                               </object>
@@ -534,11 +507,12 @@
                           <object class="GtkLabel" id="information_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="label" translatable="yes">Vendor: Corsair
-Vendor ID: 1b1c
-Product ID: 0a14</property>
+                            <property name="label" translatable="yes">null</property>
                             <property name="selectable">True</property>
                             <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="foreground" value="#88888a8a8585"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -616,7 +590,7 @@ Product ID: 0a14</property>
               </object>
               <packing>
                 <property name="resize">True</property>
-                <property name="shrink">True</property>
+                <property name="shrink">False</property>
               </packing>
             </child>
           </object>

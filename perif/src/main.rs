@@ -35,7 +35,7 @@ fn main() {
         let enable_bt = settings.get_boolean("bluetooth-devices");
 
         // Build UI
-        let ui = Ui::build(app, settings);
+        let mut ui = Ui::build(app, settings);
         ui.stack.show_no_devices(false);
 
         let hidapi_clone = hidapi.clone();
@@ -51,6 +51,10 @@ fn main() {
             command_tx
 
         });
+
+        ui.devices_view.connect_lightning(command_tx.clone());
+        ui.devices_view.connect_sidetone(command_tx.clone());
+        ui.devices_view.connect_commands(command_tx.clone());
 
         app.connect_shutdown(move |_| {
             command_tx.send(None).unwrap();

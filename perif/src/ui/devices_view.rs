@@ -3,11 +3,12 @@ use libperif::DeviceKind;
 use crate::{
     ui_device::UiDevice,
     utils,
-    tasks::CommandResult
+    tasks::{Command, CommandResult}
 };
 use std::sync::{
     Arc,
-    Mutex
+    Mutex,
+    mpsc
 };
 use super::{
     stack::Stack,
@@ -45,7 +46,7 @@ impl DevicesView {
                 devs_lock.clone()
             });
 
-            device_view_clone.show_device(ui_devs[index as usize].clone());
+            device_view_clone.show_device(ui_devs[index as usize].clone(), true);
 
         });
 
@@ -67,14 +68,16 @@ impl DevicesView {
 
             let selected_rows = device_list_clone.get_selected_rows();
 
-            if devices.len() > 0 && selected_rows.len() == 0 {
-                device_view_clone.show_device(devices[0].clone());
-            }
-
-            if selected_rows.len() > 0 {
+            if len == 0 && devices.len() > 0 {
+                device_view_clone.show_device(devices[0].clone(), true);
+            } else if len == 1 && devices.len() == 1 {
+                device_view_clone.show_device(devices[0].clone(), false);
+            } else if devices.len() > 0 && selected_rows.len() == 0 {
+                device_view_clone.show_device(devices[0].clone(), false);
+            } else if selected_rows.len() > 0 {
                 let index = selected_rows[0].get_index() as usize;
                 if index < devices.len() {
-                    device_view_clone.show_device(devices[index].clone());
+                    device_view_clone.show_device(devices[index].clone(), false);
                 }
             }
 
@@ -146,6 +149,18 @@ impl DevicesView {
 
     pub fn get_error_tx(&self) -> glib::Sender<CommandResult> {
         self.device_view.get_tx()
+    }
+
+    pub fn connect_lightning(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+        self.device_view.connect_lightning(command_tx);
+    }
+
+    pub fn connect_sidetone(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+        self.device_view.connect_sidetone(command_tx);
+    }
+
+    pub fn connect_commands(&mut self, command_tx: mpsc::Sender<Option<Command>>) {
+        self.device_view.connect_commands(command_tx);
     }
 
 }

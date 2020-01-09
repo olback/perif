@@ -6,6 +6,7 @@ use crate::{
     }
 };
 
+// TODO: WIP
 pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState> {
 
     let hid_dev = hidapi.open_path(&device.path)?;

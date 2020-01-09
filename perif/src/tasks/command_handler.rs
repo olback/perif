@@ -22,17 +22,17 @@ pub enum CommandResult {
 }
 
 pub struct Command {
-    pointer: CommandFn,
-    data: CommandData,
-    device: Device
+    pub pointer: CommandFn,
+    pub data: CommandData,
+    pub device: Device
 }
 
 impl Command {
 
-    pub fn run(&self, hidapi: &HidApi) -> PerifResult<bool> {
+    pub fn run(&self, hidapi: &HidApi) -> PerifResult<()> {
 
         let ptr = self.pointer;
-        ptr(&hidapi, &self.device, self.data)
+        ptr(&hidapi, &self.device, self.data.clone())
 
     }
 

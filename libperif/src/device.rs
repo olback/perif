@@ -21,8 +21,8 @@ pub enum BatteryState {
 }
 
 type GetBatteryFn = fn(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState>;
-pub type CommandData = [u8; 8];
-pub type CommandFn = fn(hidapi: &hidapi::HidApi, device: &Device, data: CommandData) -> PerifResult<bool>;
+pub type CommandData = Vec<u8>;
+pub type CommandFn = fn(hidapi: &hidapi::HidApi, device: &Device, data: CommandData) -> PerifResult<()>;
 
 #[derive(Clone)]
 pub struct Device {
@@ -74,6 +74,12 @@ impl SupportedDevice {
             set_sidetone: set_sidetone,
             commands: commands
         }
+    }
+
+    pub fn option(name: &str, data: &[u8]) -> (String, Vec<u8>) {
+
+        (String::from(name), Vec::from(data))
+
     }
 
 }

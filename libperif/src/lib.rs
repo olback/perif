@@ -9,5 +9,7 @@ pub use error::{PerifError, PerifResult};
 mod devices;
 pub use devices::get_available_devices;
 
+pub mod utils;
+
 // Re-export
 pub use hidapi::HidApi;
