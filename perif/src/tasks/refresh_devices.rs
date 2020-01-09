@@ -15,7 +15,7 @@ use std::{
 };
 use libperif::HidApi;
 
-pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, (enable_usb, enable_bt): (bool, bool), interval: u64) -> JoinHandle<()> {
+pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64) -> JoinHandle<()> {
 
     let hidapi = Arc::clone(&hidapi);
 
@@ -32,35 +32,25 @@ pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>
 
                 let mut ui_devices: Vec<UiDevice> = Vec::new();
 
-                if enable_usb {
+                let devices = libperif::get_available_devices(&mut *hid_lock).unwrap();
 
-                    let devices = libperif::get_available_devices(&mut *hid_lock).unwrap();
+                for dev in devices {
 
-                    for dev in devices {
+                    let battery = match dev.get_battery {
+                        Some(get_battery) => match get_battery(&hid_lock, &dev) {
+                            Ok(b) => Some(b),
+                            Err(e) => {
+                                eprintln!("{}", e);
+                                None
+                            }
+                        },
+                        None => None
+                    };
 
-                        let battery = match dev.get_battery {
-                            Some(get_battery) => match get_battery(&hid_lock, &dev) {
-                                Ok(b) => Some(b),
-                                Err(e) => {
-                                    eprintln!("{}", e);
-                                    None
-                                }
-                            },
-                            None => None
-                        };
-
-                        ui_devices.push(UiDevice {
-                            inner: dev,
-                            battery: battery
-                        });
-
-                    }
-
-                }
-
-                if enable_bt {
-
-                    // TODO: Not yet implemented!
+                    ui_devices.push(UiDevice {
+                        inner: dev,
+                        battery: battery
+                    });
 
                 }
 

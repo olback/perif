@@ -30,12 +30,10 @@ fn main() {
     application.connect_activate(move |app| {
 
         // Load settings
-        let settings = gio::Settings::new("net.olback.perif");
-        let enable_usb = settings.get_boolean("usb-devices");
-        let enable_bt = settings.get_boolean("bluetooth-devices");
+        // let settings = gio::Settings::new("net.olback.perif");
 
         // Build UI
-        let mut ui = Ui::build(app, settings);
+        let mut ui = Ui::build(app/*, settings*/);
         ui.stack.show_no_devices(false);
 
         let hidapi_clone = hidapi.clone();
@@ -46,7 +44,7 @@ fn main() {
             let (command_handle, command_tx) = tasks::command_handler(&hidapi_clone, result_tx);
 
             handler.add(command_handle);
-            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, (enable_usb, enable_bt), 1));
+            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, 1));
 
             command_tx
 
