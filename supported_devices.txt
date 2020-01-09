@@ -6,6 +6,8 @@ Corsair Void Pro Wireless 1b1c:0a1a
 Corsair Void RGB USB 1b1c:1b2a
 Corsair Void RGB USB 2 1b1c:1b23
 Corsair Void RGB Wired 1b1c:1b1c
-Dualshock 4 Wireless 054c:0ba0
-Dualshock 4 054c:05c4
-Dualshock 4 054c:09cc
+Sony Dualshock 4 Wireless 054c:0ba0
+Sony Dualshock 4 054c:05c4
+Sony Dualshock 4 054c:09cc
+Wacom Intuos BT M (USB) 056a:0378
+Wacom Intuos BT M 056a:0379

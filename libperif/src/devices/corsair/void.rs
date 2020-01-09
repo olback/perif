@@ -23,7 +23,7 @@ pub fn get_battery(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<Batt
     Ok(match buf[4] {
         1 => {
             // See https://github.com/Sapd/HeadsetControl/issues/13
-            if buf[2] & 128 != 0{
+            if buf[2] & 128 != 0 {
                 BatteryState::Discharging(buf[2] &! 128)
             } else {
                 BatteryState::Discharging(buf[2])

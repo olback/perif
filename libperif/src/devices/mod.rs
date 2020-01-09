@@ -9,7 +9,7 @@ use crate::{
 // mod audio_technica;
 mod corsair;
 mod sony;
-// mod wacom;
+mod wacom;
 
 pub fn get_supported_devices() -> Vec<SupportedDevice> {
 
@@ -17,7 +17,7 @@ pub fn get_supported_devices() -> Vec<SupportedDevice> {
         // audio_technica::supported_devices(),
         corsair::supported_devices(),
         sony::supported_devices(),
-        // wacom::supported_devices()
+        wacom::supported_devices()
     ].concat()
 
 }

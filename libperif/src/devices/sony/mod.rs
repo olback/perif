@@ -9,7 +9,7 @@ pub fn supported_devices() -> Vec<SupportedDevice> {
 
     vec![
         SupportedDevice::new(
-            "Dualshock 4 Wireless",
+            "Sony Dualshock 4 Wireless",
             DeviceKind::Controller,
             0x054cu16,
             0x0ba0u16,
@@ -19,7 +19,7 @@ pub fn supported_devices() -> Vec<SupportedDevice> {
             None
         ),
         SupportedDevice::new(
-            "Dualshock 4",
+            "Sony Dualshock 4",
             DeviceKind::Controller,
             0x054cu16,
             0x05c4u16,
@@ -29,7 +29,7 @@ pub fn supported_devices() -> Vec<SupportedDevice> {
             None
         ),
         SupportedDevice::new(
-            "Dualshock 4",
+            "Sony Dualshock 4",
             DeviceKind::Controller,
             0x054cu16,
             0x09ccu16,

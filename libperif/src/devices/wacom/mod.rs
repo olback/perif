@@ -9,6 +9,16 @@ pub fn supported_devices() -> Vec<SupportedDevice> {
 
     vec![
         SupportedDevice::new(
+            "Wacom Intuos BT M (USB)",
+            DeviceKind::Tablet,
+            0x056au16,
+            0x0378u16,
+            Some(intuos::get_battery),
+            None,
+            None,
+            None
+        ),
+        SupportedDevice::new(
             "Wacom Intuos BT M",
             DeviceKind::Tablet,
             0x056au16,

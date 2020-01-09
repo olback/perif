@@ -18,7 +18,7 @@ fn main() {
     let devices = libperif::get_supported_devices();
     for device in devices {
 
-        let device_name = device.name.to_lowercase().replace(" ", "-");
+        let device_name = device.name.to_lowercase().replace(" ", "-").replace("(", "").replace(")", "");
         let file_name = format!("{}-{}-{:04x}.rules", PRIORITY, device_name, device.pid);
         let file_content = format!("SUBSYSTEM==\"hidraw\", ATTRS{{idVendor}}==\"{vid:04x}\", ATTRS{{idProduct}}==\"{pid:04x}\", MODE=\"0666\"\n", vid = device.vid, pid = device.pid);
 

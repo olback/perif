@@ -15,6 +15,10 @@ path = "src/bin/gen_rules.rs"
 name = "gen-list"
 path = "src/bin/gen_list.rs"
 
+[[bin]]
+name = "list-all-connected"
+path = "src/bin/list_all_connected.rs"
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
