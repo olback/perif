@@ -4,19 +4,19 @@
 
     <schema path="/net/olback/perif/" id="net.olback.perif">
 
-        <key type="b" name="usb-devices">
-            <default>true</default>
-            <summary>Enable USB support</summary>
+        <key type="b" name="show-information">
+            <default>false</default>
+            <summary>Show Information</summary>
             <description>
-                Try to detect USB devices such as headsets
+                Show the 'Information' section in the device view.
             </description>
         </key>
 
-        <key type="b" name="bluetooth-devices">
+        <key type="b" name="show-command-result">
             <default>true</default>
-            <summary>Enable Bluetooth support</summary>
+            <summary>Show Command Result</summary>
             <description>
-                Try to detect bluetooth devices such as headphones and wacom tablets
+                Show the result of commands at the bottom of the window in a InfoBar.
             </description>
         </key>
 

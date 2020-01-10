@@ -30,10 +30,10 @@ fn main() {
     application.connect_activate(move |app| {
 
         // Load settings
-        // let settings = gio::Settings::new("net.olback.perif");
+        let settings = gio::Settings::new("net.olback.perif");
 
         // Build UI
-        let mut ui = Ui::build(app/*, settings*/);
+        let mut ui = Ui::build(app, settings);
         ui.stack.show_no_devices(false);
 
         let hidapi_clone = hidapi.clone();

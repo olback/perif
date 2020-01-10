@@ -38,9 +38,9 @@
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkModelButton" id="open_settings">
+            <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="receives_default">False</property>
-            <property name="no_show_all">True</property>
             <property name="text" translatable="yes">Settings</property>
           </object>
           <packing>
@@ -52,7 +52,7 @@
         <child>
           <object class="GtkModelButton" id="open_about">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can_focus">False</property>
             <property name="receives_default">True</property>
             <property name="text" translatable="yes">About Perif</property>
           </object>
@@ -470,22 +470,23 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkSeparator">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">5</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkBox" id="information_box">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkSeparator">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_bottom">12</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
                         <child>
                           <object class="GtkLabel">
                             <property name="visible">True</property>
@@ -500,7 +501,7 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">0</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
@@ -517,14 +518,14 @@
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
-                            <property name="position">1</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">True</property>
-                        <property name="position">6</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                   </object>
@@ -708,7 +709,7 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">USB Devices</property>
+                        <property name="label" translatable="yes">Show Information</property>
                         <property name="xalign">0</property>
                       </object>
                       <packing>
@@ -721,7 +722,7 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Try to detect USB devices such as headsets</property>
+                        <property name="label" translatable="yes">Show the 'Information' section in the device view</property>
                         <property name="wrap">True</property>
                         <property name="xalign">0</property>
                         <attributes>
@@ -741,12 +742,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSwitch" id="settings_enable_usb">
+                  <object class="GtkSwitch" id="settings_show_information">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="halign">end</property>
                     <property name="valign">center</property>
-                    <property name="active">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -763,7 +763,7 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Bluetooth Devices</property>
+                        <property name="label" translatable="yes">Show Command Result</property>
                         <property name="xalign">0</property>
                       </object>
                       <packing>
@@ -776,7 +776,7 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">Try to detect bluetooth devices such as headphones and wacom tablets</property>
+                        <property name="label" translatable="yes">Show the result of commands at the bottom of the window in a InfoBar</property>
                         <property name="wrap">True</property>
                         <attributes>
                           <attribute name="foreground" value="#88888a8a8585"/>
@@ -795,12 +795,11 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSwitch" id="settings_enable_bluetooth">
+                  <object class="GtkSwitch" id="settings_show_command_result">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="halign">end</property>
                     <property name="valign">center</property>
-                    <property name="active">True</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>

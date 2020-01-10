@@ -24,14 +24,14 @@ pub struct DevicesView {
 
 impl DevicesView {
 
-    pub fn build(builder: &gtk::Builder, stack: &Stack, devices: &Arc<Mutex<Vec<UiDevice>>>) -> DevicesView {
+    pub fn build(builder: &gtk::Builder, stack: &Stack, devices: &Arc<Mutex<Vec<UiDevice>>>, settings: &gio::Settings) -> DevicesView {
 
         let (tx, rx) = glib::MainContext::channel::<Vec<UiDevice>>(glib::PRIORITY_DEFAULT);
 
         let inner = DevicesView {
             devices: Arc::clone(&devices),
             device_list: builder.get_object("device_list").expect("could not get device_list"),
-            device_view: DeviceView::build(&builder),
+            device_view: DeviceView::build(&builder, &settings),
             tx
         };
 

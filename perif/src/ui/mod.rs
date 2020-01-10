@@ -27,17 +27,17 @@ pub struct Ui {
 
 impl Ui {
 
-    pub fn build(app: &Application/*, gio_settings: gio::Settings*/) -> Self {
+    pub fn build(app: &Application, gio_settings: gio::Settings) -> Self {
 
         let devices = Arc::new(Mutex::new(Vec::<UiDevice>::new()));
 
         let builder = Builder::new_from_resource(&format!("{}/ui", RESOURCE_PATH));
         let stack = stack::Stack::build(&builder, &devices);
-        let dev_view = devices_view::DevicesView::build(&builder, &stack, &devices);
+        let devs_view = devices_view::DevicesView::build(&builder, &stack, &devices, &gio_settings);
 
         let inner = Self {
             about_dialog: about::build(&builder),
-            devices_view: dev_view,
+            devices_view: devs_view,
             stack: stack
         };
 
@@ -45,7 +45,7 @@ impl Ui {
         main::build(&builder, &app);
 
         // Connect events
-        settings::Settings::connect(&builder, &inner/*, gio_settings*/);
+        settings::Settings::connect(&builder, &inner, gio_settings);
         menu::Menu::connect(&builder, &inner);
 
         inner

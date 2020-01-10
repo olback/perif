@@ -1,4 +1,5 @@
 use gtk::prelude::*;
+use gio::SettingsExt;
 use crate::{
     UiDevice,
     tasks::{Command, CommandResult}
@@ -19,12 +20,13 @@ pub struct DeviceView {
     sidetone: sidetone::Sidetone,
     commands: commands::Commands,
     information: information::Information,
-    result_tx: glib::Sender<CommandResult>
+    result_tx: glib::Sender<CommandResult>,
+    show_information: bool
 }
 
 impl DeviceView {
 
-    pub fn build(builder: &gtk::Builder) -> DeviceView {
+    pub fn build(builder: &gtk::Builder, settings: &gio::Settings) -> DeviceView {
 
         // Handle close event
         let result_infobar: gtk::InfoBar = builder.get_object("result_infobar").expect("could not get result_infobar");
@@ -34,20 +36,25 @@ impl DeviceView {
         });
 
         let (tx, rx) = glib::MainContext::channel::<CommandResult>(glib::PRIORITY_DEFAULT);
+        let show_result = settings.get_boolean("show-command-result");
         rx.attach(None, move |res| {
 
-            match res {
-                CommandResult::Success(msg) => {
-                    result_infobar.set_message_type(gtk::MessageType::Info);
-                    result_output.set_text(msg.as_str());
-                },
-                CommandResult::Error(msg) => {
-                    result_infobar.set_message_type(gtk::MessageType::Error);
-                    result_output.set_text(msg.as_str());
-                }
-            }
+            if show_result {
 
-            result_infobar.set_visible(true);
+                match res {
+                    CommandResult::Success(msg) => {
+                        result_infobar.set_message_type(gtk::MessageType::Info);
+                        result_output.set_text(msg.as_str());
+                    },
+                    CommandResult::Error(msg) => {
+                        result_infobar.set_message_type(gtk::MessageType::Error);
+                        result_output.set_text(msg.as_str());
+                    }
+                }
+
+                result_infobar.set_visible(true);
+
+            }
 
             glib::Continue(true)
 
@@ -60,7 +67,8 @@ impl DeviceView {
             sidetone: sidetone::Sidetone::build(&builder),
             commands: commands::Commands::build(&builder),
             information: information::Information::build(&builder),
-            result_tx: tx
+            result_tx: tx,
+            show_information: settings.get_boolean("show-information")
         }
 
     }
@@ -118,32 +126,40 @@ impl DeviceView {
                 }
             };
 
-            let mut info_vec = Vec::<String>::new();
-            info_vec.push(format!("Path: {}", device.inner.path.into_string().unwrap()));
-            info_vec.push(format!("Vendor ID: {:04x}", device.inner.vid));
-            info_vec.push(format!("Product ID: {:04x}", device.inner.pid));
+            if self.show_information {
 
-            match device.inner.serial {
-                Some(serial) => if serial.len() > 0 { info_vec.push(format!("Serial: {}", serial)) },
-                None => {}
-            }
+                let mut info_vec = Vec::<String>::new();
+                info_vec.push(format!("Path: {}", device.inner.path.into_string().unwrap()));
+                info_vec.push(format!("Vendor ID: {:04x}", device.inner.vid));
+                info_vec.push(format!("Product ID: {:04x}", device.inner.pid));
 
-            match device.inner.manufacturer_string {
-                Some(mfr) => if mfr.len() > 0 { info_vec.push(format!("Manufacturer: {}", mfr)) },
-                None => {}
-            }
+                match device.inner.serial {
+                    Some(serial) => if serial.len() > 0 { info_vec.push(format!("Serial: {}", serial)) },
+                    None => {}
+                }
 
-            match device.inner.product_string {
-                Some(prd) => if prd.len() > 0 { info_vec.push(format!("Product: {}", prd)) },
-                None => {}
-            }
+                match device.inner.manufacturer_string {
+                    Some(mfr) => if mfr.len() > 0 { info_vec.push(format!("Manufacturer: {}", mfr)) },
+                    None => {}
+                }
 
-            if info_vec.len() > 0 {
-                let info_string = info_vec.join("\n");
-                self.information.set_text(info_string);
-                self.information.set_visible(true);
+                match device.inner.product_string {
+                    Some(prd) => if prd.len() > 0 { info_vec.push(format!("Product: {}", prd)) },
+                    None => {}
+                }
+
+                if info_vec.len() > 0 {
+                    let info_string = info_vec.join("\n");
+                    self.information.set_text(info_string);
+                    self.information.set_visible(true);
+                } else {
+                    self.information.set_visible(false);
+                }
+
             } else {
+
                 self.information.set_visible(false);
+
             }
 
         }
