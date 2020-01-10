@@ -10,6 +10,8 @@ Before you install Perif, make sure you have installed:
 * ninja
 * Rust (cargo)
 
+If you do not want/need support for bluetooth devices, you can choose to not include the bluetooth udev rules by passing `-Dbluetooth=false` to `meson build`.
+
 ```terminal
 git clone https://github.com/olback/perif && cd perif
 cargo build --release

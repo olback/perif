@@ -1,1 +1,0 @@
-SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1b1c", ATTRS{idProduct}=="0a1a", MODE="0666"

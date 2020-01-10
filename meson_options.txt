@@ -1,0 +1,1 @@
+option('bluetooth', type: 'boolean', value: true)
