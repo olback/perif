@@ -2,7 +2,11 @@ use gtk::prelude::*;
 use gio::SettingsExt;
 use crate::{
     UiDevice,
-    tasks::{Command, CommandResult}
+    tasks::{
+        Command,
+        CommandResult
+    },
+    get_obj
 };
 use std::sync::mpsc;
 
@@ -29,8 +33,8 @@ impl DeviceView {
     pub fn build(builder: &gtk::Builder, settings: &gio::Settings) -> DeviceView {
 
         // Handle close event
-        let result_infobar: gtk::InfoBar = builder.get_object("result_infobar").expect("could not get result_infobar");
-        let result_output: gtk::Label = builder.get_object("result_output").expect("could not get result_output");
+        let result_infobar: gtk::InfoBar = get_obj!(builder, "result_infobar");
+        let result_output: gtk::Label = get_obj!(builder, "result_output");
         result_infobar.connect_response(|info_bar, _| {
             info_bar.set_visible(false);
         });
@@ -61,7 +65,7 @@ impl DeviceView {
         });
 
         DeviceView {
-            name: builder.get_object("device_name").expect("could not get device_name"),
+            name: get_obj!(builder, "device_name"),
             battery: battery::Battery::build(&builder),
             lightning: lightning::Lightning::build(&builder),
             sidetone: sidetone::Sidetone::build(&builder),

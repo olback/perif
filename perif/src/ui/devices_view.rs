@@ -3,7 +3,11 @@ use libperif::DeviceKind;
 use crate::{
     ui_device::UiDevice,
     utils,
-    tasks::{Command, CommandResult}
+    tasks::{
+        Command,
+        CommandResult
+    },
+    get_obj
 };
 use std::sync::{
     Arc,
@@ -30,7 +34,7 @@ impl DevicesView {
 
         let inner = DevicesView {
             devices: Arc::clone(&devices),
-            device_list: builder.get_object("device_list").expect("could not get device_list"),
+            device_list: get_obj!(builder, "device_list"),
             device_view: DeviceView::build(&builder, &settings),
             tx
         };

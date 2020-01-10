@@ -8,7 +8,8 @@ use std::sync::{
 use crate::{
     utils,
     tasks::Command,
-    ui_device::UiDevice
+    ui_device::UiDevice,
+    get_obj
 };
 
 #[derive(Clone)]
@@ -25,9 +26,9 @@ impl Lightning {
     pub fn build(builder: &gtk::Builder) -> Lightning {
 
         Lightning {
-            inner: builder.get_object("lightning_box").expect("could not get lightning_box"),
-            combo_box: builder.get_object("lightning_input").expect("could not get lightning_input"),
-            apply: builder.get_object("lightning_apply").expect("could not get lightning_apply"),
+            inner: get_obj!(builder, "lightning_box"),
+            combo_box: get_obj!(builder, "lightning_input"),
+            apply: get_obj!(builder, "lightning_apply"),
             commands: Arc::new(Mutex::new(None)),
             device: Arc::new(Mutex::new(None))
         }

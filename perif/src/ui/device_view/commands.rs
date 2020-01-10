@@ -8,7 +8,8 @@ use std::sync::{
 use crate::{
     utils,
     tasks::Command,
-    ui_device::UiDevice
+    ui_device::UiDevice,
+    get_obj
 };
 
 #[derive(Clone)]
@@ -25,9 +26,9 @@ impl Commands {
     pub fn build(builder: &gtk::Builder) -> Commands {
 
         Commands {
-            inner: builder.get_object("commands_box").expect("could not get commands_box"),
-            combo_box: builder.get_object("commands_input").expect("could not get commands_input"),
-            run: builder.get_object("commands_run").expect("could not get commands_run"),
+            inner: get_obj!(builder, "commands_box"),
+            combo_box: get_obj!(builder, "commands_input"),
+            run: get_obj!(builder, "commands_run"),
             commands: Arc::new(Mutex::new(None)),
             device: Arc::new(Mutex::new(None))
         }

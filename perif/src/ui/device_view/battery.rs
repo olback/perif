@@ -1,5 +1,6 @@
 use gtk::prelude::*;
 use libperif::BatteryState;
+use crate::get_obj;
 
 #[derive(Clone)]
 pub struct Battery {
@@ -12,8 +13,8 @@ impl Battery {
     pub fn build(builder: &gtk::Builder) -> Battery {
 
         Battery {
-            inner: builder.get_object("battery_box").expect("could not get battery_box"),
-            label: builder.get_object("battery_label").expect("could not get battery_label"),
+            inner: get_obj!(builder, "battery_box"),
+            label: get_obj!(builder, "battery_label")
         }
 
     }

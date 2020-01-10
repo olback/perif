@@ -8,6 +8,7 @@ mod ui;
 mod consts;
 mod ui_device;
 mod tasks;
+mod macros;
 
 use ui::Ui;
 use ui_device::UiDevice;

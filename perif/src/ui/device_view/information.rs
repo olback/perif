@@ -1,4 +1,5 @@
 use gtk::prelude::*;
+use crate::get_obj;
 
 #[derive(Clone)]
 pub struct Information {
@@ -11,8 +12,8 @@ impl Information {
     pub fn build(builder: &gtk::Builder) -> Information {
 
         Information {
-            inner: builder.get_object("information_box").expect("could not find information_box"),
-            label: builder.get_object("information_label").expect("could not find information_label")
+            inner: get_obj!(builder, "information_box"),
+            label: get_obj!(builder, "information_label")
         }
 
     }

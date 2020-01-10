@@ -8,7 +8,8 @@ use std::sync::{
 use crate::{
     utils,
     tasks::Command,
-    ui_device::UiDevice
+    ui_device::UiDevice,
+    get_obj
 };
 
 #[derive(Clone)]
@@ -25,9 +26,9 @@ impl Sidetone {
     pub fn build(builder: &gtk::Builder) -> Sidetone {
 
         Sidetone {
-            inner: builder.get_object("sidetone_box").expect("could not get sidetone_box"),
-            scale: builder.get_object("sidetone_scale").expect("could not get sidetone_scale"),
-            apply: builder.get_object("sidetone_apply").expect("could not get sidetone_apply"),
+            inner: get_obj!(builder, "sidetone_box"),
+            scale: get_obj!(builder, "sidetone_scale"),
+            apply: get_obj!(builder, "sidetone_apply"),
             command: Arc::new(Mutex::new(None)),
             device: Arc::new(Mutex::new(None))
         }

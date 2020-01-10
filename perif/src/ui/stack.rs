@@ -1,7 +1,8 @@
 use gtk::prelude::*;
 use crate::{
     ui_device::UiDevice,
-    utils
+    utils,
+    get_obj
 };
 use std::sync::{
     Arc,
@@ -19,7 +20,7 @@ impl Stack {
 
     pub fn build(builder: &gtk::Builder, devices: &Arc<Mutex<Vec<UiDevice>>>) -> Stack {
 
-        let stack: gtk::Stack = builder.get_object("views").expect("could not find views");
+        let stack: gtk::Stack = get_obj!(builder, "views");
 
         Stack {
             transition: stack.get_transition_type(),

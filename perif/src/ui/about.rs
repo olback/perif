@@ -1,8 +1,9 @@
 use gtk::prelude::*;
+use crate::get_obj;
 
 pub fn build(builder: &gtk::Builder) -> gtk::AboutDialog {
 
-    let dialog: gtk::AboutDialog = builder.get_object("about_dialog").expect("could not get about_dialog");
+    let dialog: gtk::AboutDialog = get_obj!(builder, "about_dialog");
 
     dialog.set_version(Some(env!("CARGO_PKG_VERSION")));
 

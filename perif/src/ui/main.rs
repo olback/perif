@@ -4,10 +4,11 @@ use gtk::{
     ApplicationWindow,
     Builder
 };
+use crate::get_obj;
 
 pub fn build(builder: &Builder, app: &Application) -> ApplicationWindow {
 
-    let window: ApplicationWindow = builder.get_object("main_window").expect("could not get main_window");
+    let window: ApplicationWindow = get_obj!(builder, "main_window");
     window.set_application(Some(app));
     window.show_all();
 
