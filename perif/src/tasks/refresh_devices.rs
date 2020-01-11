@@ -13,7 +13,10 @@ use std::{
         }
     }
 };
-use libperif::HidApi;
+use libperif::{
+    HidApi,
+    BatteryState
+};
 
 pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64) -> JoinHandle<()> {
 
@@ -41,7 +44,7 @@ pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>
                             Ok(b) => Some(b),
                             Err(e) => {
                                 eprintln!("{}", e);
-                                None
+                                Some(BatteryState::Error(format!("{}", e)))
                             }
                         },
                         None => None

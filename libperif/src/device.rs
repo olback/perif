@@ -17,7 +17,8 @@ pub enum BatteryState {
     Discharging(u8),
     Charging(Option<u8>),
     Full,
-    Unavailable
+    Unavailable,
+    Error(String)
 }
 
 type GetBatteryFn = fn(hidapi: &hidapi::HidApi, device: &Device) -> PerifResult<BatteryState>;

@@ -28,15 +28,14 @@ impl Battery {
     pub fn set_battery(&self, battery: BatteryState) {
 
         match battery {
-            BatteryState::Charging(level) => {
-                match level {
-                    Some(l) => self.label.set_text(&format!("Charging ({}%)", l)),
-                    None => self.label.set_text("Charging")
-                }
+            BatteryState::Charging(level) => match level {
+                Some(l) => self.label.set_text(&format!("Charging ({}%)", l)),
+                None => self.label.set_text("Charging")
             },
             BatteryState::Discharging(level) => self.label.set_text(&format!("{}%", level)),
             BatteryState::Full => self.label.set_text("Full"),
-            BatteryState::Unavailable => self.label.set_text("Unavailable")
+            BatteryState::Unavailable => self.label.set_text("Unavailable"),
+            BatteryState::Error(err) => self.label.set_text(err.as_str())
         }
 
     }
