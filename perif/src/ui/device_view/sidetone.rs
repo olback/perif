@@ -77,7 +77,7 @@ impl Sidetone {
 
                         Some(dev) => {
 
-                            let raw_value = scale_clone.get_value() as u32;
+                            let raw_value = scale_clone.get_value() as i32;
                             let value = libperif::utils::map(raw_value, 0, 100, 0, 255) as u8;
 
                             command_tx.send(Some(Command {

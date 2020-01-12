@@ -47,7 +47,7 @@ pub fn set_sidetone(hidapi: &hidapi::HidApi, device: &Device, data: CommandData)
 
     if data.len() == 1 {
 
-        let sidetone_level = utils::map(data[0] as u32, 0, 255, 200, 255) as u8;
+        let sidetone_level = utils::map(data[0] as i32, 0, 255, 200, 255) as u8;
         let data = [ 0xff, 0x0b, 0x00, 0xff, 0x04, 0x0e, 0xff, 0x05, 0x01, 0x04, 0x00, sidetone_level ];
 
         let hid_dev = hidapi.open_path(&device.path)?;
