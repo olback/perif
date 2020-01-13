@@ -1,6 +1,7 @@
 use crate::{
     utils,
-    UiDevice
+    UiDevice,
+    notification_handler::NotificationHandler
 };
 use std::{
     thread::JoinHandle,

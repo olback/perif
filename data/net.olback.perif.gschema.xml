@@ -20,6 +20,24 @@
             </description>
         </key>
 
+        <key type="i" name="notify-at">
+            <range min="-1" max="100"></range>
+            <default>20</default>
+            <summary>Low Battery Notification</summary>
+            <description>
+                Show a notification when battery in a device gets to the specified value or lower. Set to -1 to disable.
+            </description>
+        </key>
+
+        <key type="i" name="notify-interval">
+            <range min="1" max="60"></range>
+            <default>10</default>
+            <summary>Notification Interval</summary>
+            <description>
+                How often a notifications should be shown warning about low battery. Time in minutes.
+            </description>
+        </key>
+
     </schema>
 
 </schemalist>
