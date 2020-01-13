@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Launch (Linux)",
+            "program": "${workspaceFolder}/target/debug/perif",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "Build Debug"
+        }
+
+    ]
+}
