@@ -7,26 +7,19 @@
     <property name="can_focus">False</property>
     <property name="icon_name">back</property>
   </object>
-  <object class="GtkAdjustment" id="interval_adjustment">
-    <property name="lower">1</property>
-    <property name="upper">999</property>
-    <property name="value">10</property>
+  <object class="GtkAdjustment" id="notify_at_adjustment">
+    <property name="lower">-1</property>
+    <property name="upper">100</property>
+    <property name="value">20</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkListStore" id="lightning_list_store">
-    <columns>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name gchararray2 -->
-      <column type="gchararray"/>
-    </columns>
-    <data>
-      <row>
-        <col id="0" translatable="yes">aaaa</col>
-        <col id="1" translatable="yes">bbbb</col>
-      </row>
-    </data>
+  <object class="GtkAdjustment" id="notify_interval_adjustment">
+    <property name="lower">1</property>
+    <property name="upper">60</property>
+    <property name="value">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkPopoverMenu" id="popovermenu1">
     <property name="can_focus">False</property>
@@ -698,7 +691,7 @@
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="row_spacing">18</property>
-                <property name="column_spacing">6</property>
+                <property name="column_spacing">12</property>
                 <child>
                   <object class="GtkBox">
                     <property name="visible">True</property>
@@ -778,6 +771,7 @@
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">Show the result of commands at the bottom of the window in a InfoBar</property>
                         <property name="wrap">True</property>
+                        <property name="xalign">0</property>
                         <attributes>
                           <attribute name="foreground" value="#88888a8a8585"/>
                         </attributes>
@@ -804,6 +798,37 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Settings require a restart of the application to take effect</property>
+                    <property name="xalign">0</property>
+                    <attributes>
+                      <attribute name="style" value="italic"/>
+                      <attribute name="foreground" value="#88888a8a8585"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="settings_reset">
+                    <property name="label" translatable="yes">Reset</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">4</property>
                   </packing>
                 </child>
                 <child>
@@ -845,17 +870,103 @@
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
+                    <property name="top_attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Notification Threshold</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Send a notification if battery in a device drops below the specified threshold. Set to -1 to disable notifications.</property>
+                        <property name="wrap">True</property>
+                        <property name="max_width_chars">0</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="foreground" value="#88888a8a8585"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="settings_reset">
-                    <property name="label" translatable="yes">Reset</property>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Notification Interval</property>
+                        <property name="xalign">0</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">How often to be notified about low battery in a device. Time in minutes.</property>
+                        <property name="wrap">True</property>
+                        <property name="max_width_chars">0</property>
+                        <property name="xalign">0</property>
+                        <attributes>
+                          <attribute name="foreground" value="#88888a8a8585"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="settings_notify_at">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="halign">end</property>
                     <property name="valign">center</property>
+                    <property name="adjustment">notify_at_adjustment</property>
+                    <property name="update_policy">if-valid</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -863,20 +974,17 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkSpinButton" id="settings_notify_interval">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Settings require a restart of the application to take effect</property>
-                    <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="style" value="italic"/>
-                      <attribute name="foreground" value="#88888a8a8585"/>
-                    </attributes>
+                    <property name="can_focus">True</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="adjustment">notify_interval_adjustment</property>
+                    <property name="update_policy">if-valid</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
+                    <property name="left_attach">1</property>
                     <property name="top_attach">3</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
               </object>

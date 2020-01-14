@@ -24,6 +24,12 @@ impl Settings {
         settings.bind("show-command-result", &s_show_command_result, "active", SettingsBindFlags::DEFAULT);
 
 
+        let s_notify_at: gtk::SpinButton = get_obj!(builder, "settings_notify_at");
+        settings.bind("notify-at", &s_notify_at, "value", SettingsBindFlags::DEFAULT);
+
+        let s_notify_interval: gtk::SpinButton = get_obj!(builder, "settings_notify_interval");
+        settings.bind("notify-interval", &s_notify_interval, "value", SettingsBindFlags::DEFAULT);
+
         // Connect reset button
         let settings_reset: gtk::Button = get_obj!(builder, "settings_reset");
         settings_reset.connect_clicked(move |_| {
