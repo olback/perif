@@ -1,4 +1,5 @@
 use gio::prelude::*;
+use gio::SettingsExt;
 use std::env::args;
 use libperif::HidApi;
 use std::sync::{Arc, Mutex};
@@ -33,6 +34,8 @@ fn main() {
 
         // Load settings
         let settings = gio::Settings::new("net.olback.perif");
+        let notif_interval = settings.get_int("notify-interval");
+        let notif_threshold = settings.get_int("notify-at");
 
         // Build UI
         let mut ui = Ui::build(app, settings);
@@ -46,7 +49,7 @@ fn main() {
             let (command_handle, command_tx) = tasks::command_handler(&hidapi_clone, result_tx);
 
             handler.add(command_handle);
-            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, 1));
+            handler.add(tasks::refresh_devices(handler.get_bool(), &hidapi_clone, device_tx, 1, notif_interval as u64, notif_threshold as u32));
 
             command_tx
 

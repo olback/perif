@@ -6,14 +6,11 @@ use std::{
         UNIX_EPOCH
     }
 };
-use crate::{
-    ui_device::UiDevice
-};
 use notify_rust::Notification;
 use libperif::{
     PerifResult,
     new_err,
-    BatteryState
+    Device
 };
 
 pub struct NotificationHandler {
@@ -32,27 +29,28 @@ impl NotificationHandler {
 
     }
 
-    pub fn show(&mut self, device: &UiDevice, level: u8) {
+    pub fn show(&mut self, device: &Device, level: u8) {
 
-        let inner_device = self.devices.get_mut(&device.inner.path);
+        let inner_device = self.devices.get_mut(&device.path);
         let now = SystemTime::now().duration_since(UNIX_EPOCH).expect("could not get unix epoch time, check system time");
         let epoch = now.as_secs();
 
         let should_send = match inner_device {
             Some(v) => {
-                let r = *v + (self.interval * 60) >= epoch;
-                *v = epoch;
-                r
+                let i = *v + (self.interval * 60);
+                if i <= epoch {
+                    *v = epoch;
+                }
+                i <= epoch
             },
             None => {
-                self.devices.insert(device.inner.path.clone(), epoch);
+                self.devices.insert(device.path.clone(), epoch);
                 true
             }
         };
 
         if should_send {
-
-            match NotificationHandler::send(&device.inner.name, level) {
+            match NotificationHandler::send(&device.name, level) {
                 Ok(_) => {},
                 Err(e) => eprintln!("{}", e)
             };

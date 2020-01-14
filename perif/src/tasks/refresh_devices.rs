@@ -19,9 +19,10 @@ use libperif::{
     BatteryState
 };
 
-pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64) -> JoinHandle<()> {
+pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>, device_tx: glib::Sender<Vec<UiDevice>>, interval: u64, notif_interval: u64, notif_threshold: u32) -> JoinHandle<()> {
 
     let hidapi = Arc::clone(&hidapi);
+    let mut notif_handler = NotificationHandler::new(notif_interval);
 
     std::thread::spawn(move || {
 
@@ -50,6 +51,20 @@ pub fn refresh_devices(should_stop: Arc<AtomicBool>, hidapi: &Arc<Mutex<HidApi>>
                         },
                         None => None
                     };
+
+                    match &battery {
+                        Some(state) => {
+                            match state {
+                                BatteryState::Discharging(v) => {
+                                    if *v <= notif_threshold as u8 {
+                                        notif_handler.show(&dev, *v)
+                                    }
+                                },
+                                _ => {}
+                            }
+                        }
+                        None => {}
+                    }
 
                     ui_devices.push(UiDevice {
                         inner: dev,
