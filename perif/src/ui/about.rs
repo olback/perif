@@ -5,7 +5,7 @@ pub fn build(builder: &gtk::Builder) -> gtk::AboutDialog {
 
     let dialog: gtk::AboutDialog = get_obj!(builder, "about_dialog");
 
-    dialog.set_version(Some(env!("CARGO_PKG_VERSION")));
+    dialog.set_version(Some(include_str!("../../out/version.txt")));
 
     dialog
 
