@@ -1,0 +1,118 @@
+version: 2.1
+
+jobs:
+  build_linux:
+    docker:
+      - image: olback/rust-gtk-linux:latest
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore Linux Rust Cache
+          key: cargo-cache-linux-v1-{{ checksum "Cargo.lock" }}-{{ checksum "Cargo.toml" }}
+
+      - run:
+          name: Show Version
+          command: |
+                    rustc --version --verbose
+                    rustup --version
+                    cargo --version --verbose
+      - run:
+          name: Build Binary
+          command: |
+                    if [ $CIRCLE_BRANCH = "master" ]; then
+                      cargo build --release --target=x86_64-unknown-linux-gnu
+                    else
+                      cargo build --target=x86_64-unknown-linux-gnu && cd ..
+                    fi
+      - save_cache:
+          name: Save Rust Cache
+          key: cargo-cache-linux-v1-{{ checksum "Cargo.lock" }}-{{ checksum "Cargo.toml" }}
+          paths:
+            - "~/.cargo/"
+            - "~/.rustup/"
+            - "./target/"
+
+      - run:
+          name: Make dist
+          command: |
+                    mkdir -p dist/linux
+                    if [ $CIRCLE_BRANCH = "master" ]; then
+                      cp target/x86_64-unknown-linux-gnu/release/perif dist/linux/
+                    else
+                      cp target/x86_64-unknown-linux-gnu/debug/perif dist/linux/
+                    fi
+      - run:
+          name: Generate hashes
+          command: |
+                    cd dist/linux
+                    sha256sum perif > perif.sha256
+      - run:
+          name: Verify hashes
+          command: |
+                    cd dist/linux
+                    sha256sum -c perif.sha256
+      - run:
+          name: Show hashes
+          command: |
+                    cd dist/linux
+                    cat perif.sha256
+      - save_cache:
+          name: Save Linux Build Cache
+          key: perif-dist-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - "./dist/linux/perif"
+            - "./dist/linux/perif.sha256"
+
+      - store_artifacts:
+          name: Store Build
+          path: "./dist/linux/perif"
+          destination: "/linux/perif"
+
+      - store_artifacts:
+          name: Store Build Hash
+          path: "./dist/linux/perif.sha256"
+          destination: "/linux/perif.sha256"
+
+
+  deploy:
+    docker:
+      - image: circleci/node:latest
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          name: Restore Deploy Node Cache
+          key: node-deploy-cache-{{ checksum ".circleci/deploy/package.json" }}-{{ checksum ".circleci/deploy/package-lock.json" }}
+
+      - run:
+          name: Install dependencies
+          command: cd .circleci/deploy && npm install
+
+      - save_cache:
+          name: Save Node Cache
+          key: node-deploy-cache-{{ checksum ".circleci/deploy/package.json" }}-{{ checksum ".circleci/deploy/package-lock.json" }}
+          paths:
+            - "./.circleci/deploy/node_modules"
+
+      - restore_cache:
+          name: Restore Build
+          key: perif-dist-{{ .Environment.CIRCLE_SHA1 }}
+
+      - run:
+          name: Deploy
+          command: node .circleci/deploy/deploy.js
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build_linux
+      - deploy:
+          requires:
+            - build_linux
+          filters:
+            branches:
+              only: master
