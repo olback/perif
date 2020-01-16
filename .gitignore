@@ -2,6 +2,11 @@
 *.glade~
 /target/
 /test_target/
-/build/
 /logs/
 /dist/
+/parts/
+/prime/
+/snap/.snapcraft
+/out/
+/_mbuild/
+*.snap

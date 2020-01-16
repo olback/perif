@@ -7,7 +7,10 @@ bindir = get_option('bindir')
 
 
 # Binary
-install_data('target/release/perif', install_dir: bindir)
+if get_option('install-bin')
+    install_data('target/release/perif', install_dir: bindir)
+endif
+
 
 # Udev rules
 subdir('udev')

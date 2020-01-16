@@ -14,16 +14,16 @@ If you do not want/need support for bluetooth devices, you can choose to not inc
 
 ```terminal
 git clone https://github.com/olback/perif && cd perif
-cargo build --release
-cargo run --release --bin gen-rules
-meson build
-sudo ninja -C build install
+cargo build --release --all
+./target/release/gen-rules
+meson _mbuild
+sudo ninja -C _mbuild install
 ```
 
 
 ## Uninstall
 ```terminal
-sudo ninja -C uninstall
+sudo ninja -C _mbuild uninstall
 ```
 
 

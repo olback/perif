@@ -1,1 +1,2 @@
 option('bluetooth', type: 'boolean', value: true)
+option('install-bin', type: 'boolean', value: true)

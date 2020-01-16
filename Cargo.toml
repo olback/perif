@@ -1,5 +1,22 @@
+[package]
+name = "perif"
+version = "0.2.0"
+authors = ["Edwin Svensson <git@olback.net>"]
+edition = "2018"
+build = "build/build.rs"
+
+[dependencies]
+libperif = { path = "libperif" }
+gtk = { version = "0.8", features = [ "v3_22_29" ]}
+gio = "0.8"
+glib = "0.9"
+notify-rust = "3.6"
+
+[build-dependencies]
+regex = "1"
+last-git-commit = "0.1.1"
+
 [workspace]
 members = [
-    "libperif",
-    "perif"
+    "libperif"
 ]

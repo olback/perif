@@ -3,7 +3,7 @@
 <component type="desktop">
   <id>net.olback.Perif.desktop</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <project_license>AGPL-3.0-or-later</project_license>
+  <project_license>AGPL-3.0</project_license>
   <name>Perif</name>
   <summary>Control your peripherals</summary>
   <description>
@@ -28,33 +28,4 @@
   <url type="donation">https://github.com/sponsors/olback</url>
   <url type="help">https://github.com/olback/perif/issues</url>
   <content_rating type="oars-1.1" />
-  <releases>
-    <release version="0.2.0" date="2020-01-09">
-      <description>
-        <p>Overview of changes in Perif 0.2.0</p>
-        <ul>
-          <li>Implemented Ligntning control</li>
-          <li>Implemented Sidetone control</li>
-          <li>Implemented Commands control</li>
-          <li>Added all known Corsair Void products</li>
-        </ul>
-      </description>
-    </release>
-    <release version="0.1.0" date="2020-01-07">
-      <description>
-        <p>Overview of changes in Perif 0.1.0</p>
-        <ul>
-          <li>Initial release</li>
-        </ul>
-      </description>
-    </release>
-    <!-- <release version="0.3.0" date="2020-01-07">
-      <description>
-        <p>Overview of changes in Perif 0.3.0</p>
-        <ul>
-          <li>Initial release</li>
-        </ul>
-      </description>
-    </release> -->
-  </releases>
 </component>
