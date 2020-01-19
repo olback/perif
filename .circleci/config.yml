@@ -111,9 +111,9 @@ workflows:
   build:
     jobs:
       - build_linux
-      # - deploy:
-      #     requires:
-      #       - build_linux
-      #     filters:
-      #       branches:
-      #         only: master
+      - deploy:
+          requires:
+            - build_linux
+          filters:
+            branches:
+              only: master
