@@ -26,6 +26,7 @@ jobs:
                     else
                       cargo build --target=x86_64-unknown-linux-gnu && cd ..
                     fi
+
       - save_cache:
           name: Save Rust Cache
           key: cargo-cache-linux-v1-{{ checksum "Cargo.lock" }}-{{ checksum "Cargo.toml" }}
@@ -110,9 +111,9 @@ workflows:
   build:
     jobs:
       - build_linux
-      - deploy:
-          requires:
-            - build_linux
-          filters:
-            branches:
-              only: master
+      # - deploy:
+      #     requires:
+      #       - build_linux
+      #     filters:
+      #       branches:
+      #         only: master
