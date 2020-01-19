@@ -14,9 +14,9 @@ install_data('net.olback.Perif.appdata.xml',
 )
 
 # Gschema
-# install_data('net.olback.perif.gschema.xml',
-#     install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas'),
-# )
+install_data('net.olback.perif.gschema.xml',
+    install_dir: join_paths(get_option('datadir'), 'glib-2.0', 'schemas'),
+)
 
 # Compile schemas
 meson.add_install_script('meson_post_install.py')
