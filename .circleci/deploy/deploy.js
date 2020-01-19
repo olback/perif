@@ -26,7 +26,7 @@ const files = [
     new File('./dist/linux/perif.sha256')
 ];
 
-let cargoToml = fs.readFileSync('perif/Cargo.toml', 'utf8').toString().split('\n');
+let cargoToml = fs.readFileSync('Cargo.toml', 'utf8').toString().split('\n');
 let currentVersion = cargoToml.filter(l => l.includes('version = '))[0].split(' = ')[1].replace(/\"/g, '');
 
 (async () => {
