@@ -3,6 +3,11 @@
 An application to control lightning, sidetone and check battery status on your peripherals.
 
 
+| OS/Arch | Status |
+| -- | ------ |
+| Linux/amd64 | [![CircleCI](https://circleci.com/gh/olback/perif.svg?style=svg)](https://circleci.com/gh/olback/perif) |
+
+
 ## Install
 
 Before you install Perif, make sure you have installed:

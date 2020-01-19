@@ -22,8 +22,8 @@ const gh = {
 
 const files = [
     // Linux files
-    new File('./target/x86_64-unknown-linux-gnu/release/perif'),
-    new File('./target/x86_64-unknown-linux-gnu/release/perif.sha256')
+    new File('./dist/linux/perif'),
+    new File('./dist/linux/perif.sha256')
 ];
 
 let cargoToml = fs.readFileSync('perif/Cargo.toml', 'utf8').toString().split('\n');
