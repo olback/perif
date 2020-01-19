@@ -7,6 +7,9 @@
 /parts/
 /prime/
 /snap/.snapcraft
+/snap/gui
+/_snap_build
 /out/
 /_mbuild/
 *.snap
+/snap/snapcraft.yaml

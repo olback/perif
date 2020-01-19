@@ -1,5 +1,5 @@
 {
-    "mesonbuild.configureOnOpen": true,
+    "mesonbuild.configureOnOpen": false,
     "lldb.displayFormat": "auto",
     "lldb.showDisassembly": "auto",
     "lldb.dereferencePointers": false
