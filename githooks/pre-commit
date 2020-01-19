@@ -1,5 +1,11 @@
 #!/bin/bash
 
-cargo run --bin gen-list
-cargo run --bin gen-rules
+if [ -f target/debug/gen-list ]; then
+	target/debug/gen-list
+fi
+
+if [ -f target/debug/gen-rules ]; then
+	target/debug/gen-rules
+fi
+
 git add udev/* supported_devices.txt
