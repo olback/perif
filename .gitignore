@@ -11,5 +11,6 @@
 /_snap_build
 /out/
 /_mbuild/
+/_build/
 *.snap
 /snap/snapcraft.yaml
