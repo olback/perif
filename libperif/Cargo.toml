@@ -22,7 +22,7 @@ path = "src/bin/list_all_connected.rs"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-hidapi = { version = "1.1", default-features = false, features = [ "linux-static-hidraw" ] }
+hidapi = { version = "1.2", default-features = false, features = [ "linux-static-hidraw" ] }
 
 # Needed by src/devices/sony/dualshock4.rs
 crc = "1.8.1"
