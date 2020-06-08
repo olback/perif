@@ -10,7 +10,7 @@ libperif = { path = "libperif" }
 gtk = { version = "0.8", features = [ "v3_22_29" ]}
 gio = "0.8"
 glib = "0.9"
-notify-rust = "3.6"
+notify-rust = "4.0"
 
 [build-dependencies]
 regex = "1"
