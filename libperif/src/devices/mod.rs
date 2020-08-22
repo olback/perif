@@ -28,18 +28,18 @@ pub fn get_available_devices(hidapi: &mut hidapi::HidApi) -> PerifResult<Vec<Dev
 
     hidapi.refresh_devices()?;
 
-    for hid_dev in hidapi.device_list() {
+    for hid_dev in hidapi.devices() {
         for supported in get_supported_devices() {
-            if hid_dev.vendor_id() == supported.vid && hid_dev.product_id() == supported.pid {
+            if hid_dev.vendor_id == supported.vid && hid_dev.product_id == supported.pid {
                 available.push(Device {
                     name: supported.name,
                     kind: supported.kind,
-                    path: hid_dev.path().to_owned(),
+                    path: hid_dev.path.clone(),
                     vid: supported.vid,
                     pid: supported.pid,
-                    serial: hid_dev.serial_number().map_or(None, |s| Some(s.to_owned())),
-                    manufacturer_string: hid_dev.manufacturer_string().map_or(None, |s| Some(s.to_owned())),
-                    product_string: hid_dev.product_string().map_or(None, |s| Some(s.to_owned())),
+                    serial: hid_dev.serial_number.clone(),
+                    manufacturer_string: hid_dev.manufacturer_string.clone(),
+                    product_string: hid_dev.product_string.clone(),
                     get_battery: supported.get_battery,
                     set_lightning: supported.set_lightning,
                     set_sidetone: supported.set_sidetone,
