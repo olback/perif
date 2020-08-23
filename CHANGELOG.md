@@ -1,3 +1,6 @@
+# 0.3.0
+* Updated `hidapi` to version 1.2
+
 # 0.2.0
 * Implemented Ligntning control
 * Implemented Sidetone control
