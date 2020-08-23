@@ -10,7 +10,7 @@ fn main() {
     let devices = libperif::get_supported_devices();
 
     for device in devices {
-        lines.push(format!("SUBSYSTEM==\"hidraw\", ATTRS{{idVendor}}==\"{vid:04x}\", ATTRS{{idProduct}}==\"{pid:04x}\", MODE=\"0666\"", vid = device.vid, pid = device.pid));
+        lines.push(format!("# {name}\nSUBSYSTEM==\"hidraw\", ATTRS{{idVendor}}==\"{vid:04x}\", ATTRS{{idProduct}}==\"{pid:04x}\", MODE=\"0666\"", name = device.name, vid = device.vid, pid = device.pid));
     }
 
     lines.push(String::new());
